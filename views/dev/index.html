@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+	<meta charset="UTF-8">
+	<title>ViaOTC</title> 
+	<script type="text/javascript" src="//cn-api.jtcool.com/api/user/jsinfo"></script>	
+	<script>
+		function loadScript(src, callback){
+		  var s, t;
+		  s = document.createElement('script');
+		  s.type = 'text/javascript';
+		  // s.onreadystatechange = function() { 
+		  //   if (s.readyState == 'complete'){
+		  //     callback();
+		  //   }
+		  // };
+		  s.onload = function(){
+		  	callback && callback();
+		  };
+		  s.src = src;		  
+		  t = document.getElementsByTagName('script')[0]; 
+		  t.parentNode.appendChild(s); 
+		}	
+
+		function loadLink(href){
+			var linkTag = document.createElement('link'); 
+			linkTag.setAttribute('href', href);
+	       	linkTag.setAttribute('rel','stylesheet');
+	        linkTag.setAttribute('type','text/css');			
+			var script = document.getElementsByTagName('script')[0]; 
+			script.parentNode.appendChild(linkTag); 
+		}
+
+		function getLink(name){
+			return window.OTC.cdn_url + '/dev/css/' + name + '?' + window.OTC.version; 
+		}
+
+		function getSrc(name){
+			return window.OTC.cdn_url + '/dev/' + name + '?' + window.OTC.version; 
+		}
+
+		//window.onload = function(){
+			loadLink(getLink('vendor.css'));
+			loadLink(getLink('app.css'));
+
+			loadScript(getSrc('vendor.js'), function(){
+				loadScript(getSrc('app.js'));
+			});
+		//}
+	</script>
+</head>
+<body>
+	<div id="root">
+	</div>
+</body>
+</html>
