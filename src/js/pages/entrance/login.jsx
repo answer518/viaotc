@@ -51,7 +51,7 @@ class Login extends Component {
 	        	...other
 	        };
 
-	        ajax.post('/api/login', param)
+	        ajax.post('/api/pc/login', param)
 	        	.then((response) => {
 	        		const { error, err_times=0, msg='' } = response;
 	        		if(error == 0){
@@ -119,7 +119,7 @@ class Login extends Component {
 						</FormItem>
 						<div className="captcha-code">
 							<img 
-								src={`${window.OTC.api_url}/api/captcha?${timeStamp}`}
+								src={`${window.OTC.api_url}/api/pc/captcha?${timeStamp}`}
 								onClick={this.refreshCode}
 							/>						
 						</div>

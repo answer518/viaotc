@@ -28,7 +28,7 @@ function requireAuthentication(Component) {
 		}
 
 		getAuthInfo(){
-			ajax.get('/api/auth/authinfo')
+			ajax.get('/api/pc/auth/authinfo')
 				.then((response) => {
 					const { error, data } = response;
 					if (error == 0){

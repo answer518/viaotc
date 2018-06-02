@@ -66,7 +66,7 @@ class MyMessage extends Component {
 		const { type, page } = this.state;
 		const finalPage = resetPage ? 1 : page; 
 
-		ajax.get('/api/message/my_msg',{type, page: finalPage})
+		ajax.get('/api/pc/message/my_msg',{type, page: finalPage})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -82,7 +82,7 @@ class MyMessage extends Component {
 	}
 
 	readMessage(ids){
-		ajax.get('/api/message/change_to_read', {message_ids: ids.join(',')})
+		ajax.get('/api/pc/message/change_to_read', {message_ids: ids.join(',')})
 			.then((response) => {
 				const { error } = response;
 				if (error == 0){

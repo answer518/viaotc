@@ -26,7 +26,7 @@ class CoinsInfoArea extends Component {
 
 	getCoins(){
 		if (this.timer) {clearTimeout(this.timer)}
-		ajax.get('/api/market',{}, 2)
+		ajax.get('/api/pc/market',{}, 2)
 			.then((response) => {
 				const { msg, data } = response;
 				if (msg.toLowerCase() == 'ok'){
@@ -46,7 +46,7 @@ class CoinsInfoArea extends Component {
 			<div className="coins-info-area">
 					<BlockExpandable 
 						blocks = {blocks}
-				        url="/api/ggs/gg_list"
+				        url="/api/pc/ggs/gg_list"
 					/>
 			</div>
 		)

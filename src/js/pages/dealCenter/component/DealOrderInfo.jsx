@@ -112,7 +112,7 @@ class DealOrderInfo extends Component {
 		if (this.timer) {clearTimeout(this.timer)}
 		if (this.startTimer) {clearTimeout(this.startTimer)}	
 
-		ajax.get('/api/orders/detail', {order_id})
+		ajax.get('/api/pc/orders/detail', {order_id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -142,10 +142,19 @@ class DealOrderInfo extends Component {
 
 	}
 
+	renderPayments () {
+        const { pay_info=[], pay_method=[] } = this.state.order;
+
+        return (<div className="order-info-item">
+					<label>交易方式：</label>
+					<span>{pay_method.join('，')}</span>
+				</div>)
+    }
+
 	render(){
 		const { className, type, order_id, funds_password_status, chatStatus } = this.props;
 		const { cancelVisible, payVisible, receiptVisible, appealVisible, expect_period_time } = this.state;
-		const { order_num='', coin_type='', coin_price='', currency='', pay_method=[], expect_period='', 
+		const { order_num='', coin_type='', coin_price='', currency='', pay_info=[], pay_method=[], expect_period='', 
 		amount=0, remaining_time='', currency_amount=0, status='' } = this.state.order;
 
 		const color = expect_period_time == 0 ? '#333' : '#1d9e53';
@@ -183,49 +192,30 @@ class DealOrderInfo extends Component {
 				<div className="deal-order-info-body">
 					<div className="order-info">
 						<div className="order-info-item">
-							<label>购买币种：</label>
-							<span>{coin_type.toUpperCase()}</span>
-						</div>
-						<div className="order-info-item">
 							<label>
-								<span style={{marginRight: '28px'}}>价</span>格：
+								<span style={{marginRight: '28px'}}>单</span>价：
 							</label>
 							<span>{`${coin_price} ${currency}`}</span>
-						</div>			
+						</div>
 						<div className="order-info-item">
-							<label>付款方式：</label>
-							<span>{pay_method.join('/')}</span>
-						</div>	
-						<div className="order-info-item">
-							<label>交易总额：</label>
-							<span>{`${currency_amount} ${currency}`}</span>
-						</div>	
-						<div className="order-info-item">
-							<label>付款期限：</label>
-							<span>{expectPeriod}
-								{(chatStatus == 0 && expect_period_time > 0) && 
-									<span style={{color}}>
-										<span style={{margin: '0 5px'}}>/</span>
-										<span>{expect_period_time}分钟</span>
-									</span>
-								}
-							</span>
-						</div>																							
-					</div>
-					<div className="order-amount">
-						<div className="order-info-item">
-							<label>购买数量：</label>
+							<label>交易数量：</label>
 							<span>{`${amount} ${coin_type.toUpperCase()}`}</span>
-						</div>	
+						</div>
 						<div className="order-info-item">
-							<label>付款金额：</label>
+							<label>应付金额：</label>
 							<span>{`${currency_amount} ${currency}`}</span>
-						</div>	
+						</div>
 						<div className="order-info-item">
 							<label>交易状态：</label>
 							<span style={{fontSize: '14px', color: '#002aff'}}>{dealStatus[chatStatus]}</span>
-						</div>	
+						</div>																				
 					</div>
+					{
+					(chatStatus === 0 || chatStatus === 2) &&
+					<div className="order-payment">
+						{this.renderPayments()}
+					</div>
+					}
 					<div className="order-operate">
 						{
 							type == 'sell' ? 
@@ -294,7 +284,7 @@ class DealOrderInfo extends Component {
 						</div>
 						<FundPasswordForm 
 							text="确认已付款"
-							url="/api/orders/confirm_payed"
+							url="/api/pc/orders/confirm_payed"
 							param={{order_id}}
 							onSuccess={this.dealPayOk}
 							style={{paddingLeft: '140px'}}
@@ -319,7 +309,7 @@ class DealOrderInfo extends Component {
 					</div>
 					<UnfreezeForm 
 						text="确认已收款"
-						url="/api/orders/unfreeze"
+						url="/api/pc/orders/unfreeze"
 						param={{order_id}}						
 						onSuccess={this.dealReceiptOk}
 						style={{paddingLeft: '140px'}}
@@ -336,8 +326,8 @@ class DealOrderInfo extends Component {
 					footer={null}
 				>
 					{appealVisible && <AppealForm 
-						url="/api/appeal/do_appeal"
-						action="/api/appeal/upload_img"
+						url="/api/pc/appeal/do_appeal"
+						action="/api/pc/appeal/upload_img"
 						order_id={order_id}
 						onSuccess={this.appealCancel}
 					/>}

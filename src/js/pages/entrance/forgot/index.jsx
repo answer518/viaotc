@@ -41,7 +41,7 @@ class Step1 extends Component {
 
 	    this.props.form.validateFields((err, values) => {
 	    	if (!err) {  
-				ajax.post('/api/find_password/verify_account', values)   
+				ajax.post('/api/pc/find_password/verify_account', values)   
 					.then((response) => {
 						const { error, msg = '' } = response;
 						if (error == 0){
@@ -94,7 +94,7 @@ class Step1 extends Component {
 						</FormItem>
 						<div className="captcha-code">
 							<img 
-								src={`${window.OTC.api_url}/api/captcha?${timeStamp}`}
+								src={`${window.OTC.api_url}/api/pc/captcha?${timeStamp}`}
 								onClick={this.refreshCode}
 							/>						
 						</div>

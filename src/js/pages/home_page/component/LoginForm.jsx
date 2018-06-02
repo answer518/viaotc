@@ -33,7 +33,7 @@ class LoginForm extends Component {
 
 	userLogin(param){
 		const { onLoginSuccess } = this.props;
-		ajax.post('/api/login', param)
+		ajax.post('/api/pc/login', param)
 			.then((response) => {
 				const { error, err_times, msg='' } = response;
 				if (error != 0) {
@@ -120,7 +120,7 @@ class LoginForm extends Component {
 							</FormItem>
 							<div className="captcha-code">
 								<img 
-									src={`${window.OTC.api_url}/api/captcha?${timeStamp}`} 
+									src={`${window.OTC.api_url}/api/pc/captcha?${timeStamp}`} 
 									onClick={this.refreshCode}
 								/>						
 							</div>

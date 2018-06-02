@@ -6,7 +6,6 @@ import * as globalAction from 'src/js/actions';
 import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import ajax from 'utils/request';
-import { Redirect } from 'react-router-dom'; 
 
 class DealCenterPublish extends Component {
 

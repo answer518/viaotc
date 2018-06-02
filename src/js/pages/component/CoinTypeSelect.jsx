@@ -31,7 +31,7 @@ class CoinTypeSelect extends Component {
 	}
 
 	getCoinTypes(){
-		ajax.get('/api/market/coin_type')
+		ajax.get('/api/pc/market/coin_type')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0) {

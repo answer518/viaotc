@@ -35,7 +35,7 @@ class Notice extends Component {
 
 	getNoticeList(){
 		const { page } = this.state;
-		ajax.get('/api/notice/notice_list', {page})
+		ajax.get('/api/pc/notice/notice_list', {page})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0) {

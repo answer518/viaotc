@@ -20,18 +20,18 @@ class PasswordRule extends Component {
 		this.updateMode(password);
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps(nextProps){
 		if (this.props.password != nextProps.password){
 			this.updateMode(nextProps.password);
 		}
 	}
 
-	updateMode(password) {
-		const mode = passwordStrength(password);
+	updateMode(password){
+		const mode = passwordStrength(password); 
 		this.setState({mode});
 	}
 
-	renderStrength(mode) {
+	renderStrength(mode){
 		if (mode == 0 ) {
 			return '低';
 		} else if (mode >= 1 && mode <= 2){

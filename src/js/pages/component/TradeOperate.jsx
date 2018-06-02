@@ -20,7 +20,6 @@ class TradeOperate extends Component {
 		return (
 			<div className="operate-list">
 				{status == 0 && <div className="operate-container">
-					<span className="operate-list-item" style={{color: '#33bf33'}} onClick={onActive}>激活</span>
 					<Link className="operate-list-item" to={`/app/dealCenter/publish/${ad_type}?id=${id}`}>修改</Link>		
 					<span className="operate-list-item" onClick={onDelete}>删除</span>					
 				</div>}

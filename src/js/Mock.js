@@ -6,7 +6,7 @@ Mock.setup({
     timeout: '200-600'
 });
 
-Mock.mock('/api/ad?type=btc', { 
+Mock.mock('/api/pc/ad?type=btc', { 
 		'error': 0, 
 		'msg': 'ok', 
 		'data': { 
@@ -38,7 +38,7 @@ Mock.mock('/api/ad?type=btc', {
 		} 
 });
 
-Mock.mock('/api/ad?type=etc', { 
+Mock.mock('/api/pc/ad?type=etc', { 
 		'error': 0, 
 		'msg': 'ok', 
 		'data': { 
@@ -70,7 +70,7 @@ Mock.mock('/api/ad?type=etc', {
 		} 
 });
 
-Mock.mock('/api/ad?type=ltc', { 
+Mock.mock('/api/pc/ad?type=ltc', { 
 		'error': 0, 
 		'msg': 'ok', 
 		'data': { 
@@ -102,7 +102,7 @@ Mock.mock('/api/ad?type=ltc', {
 		} 
 });
 
-Mock.mock('/api/ad?type=eth', { 
+Mock.mock('/api/pc/ad?type=eth', { 
 		'error': 0, 
 		'msg': 'ok', 
 		'data': { 
@@ -134,7 +134,7 @@ Mock.mock('/api/ad?type=eth', {
 		} 
 });
 
-Mock.mock('/api/coins', { 
+Mock.mock('/api/pc/coins', { 
     'error': 0,
     'msg': 'ok',
     'data': [
@@ -173,7 +173,7 @@ Mock.mock('/api/coins', {
     ]
 })
 
-Mock.mock('/api/ad?type=btc&page=1&limit=10', {
+Mock.mock('/api/pc/ad?type=btc&page=1&limit=10', {
 		'error': 0, 
 		'msg': 'ok', 
 		'data|5': [{

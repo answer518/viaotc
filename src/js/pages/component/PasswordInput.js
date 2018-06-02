@@ -39,12 +39,12 @@ class PasswordInput extends Component {
 
 	render(){
 		const { placeholder, value, onChange, hasRule } = this.props;
-		const { open, showRule } = this.state;
-		const eyeCls = classNames({
+		const { open, showRule } = this.state; 
+		const eyeCls =classNames({
 			'common-bg': true,
 			'eyes': true,
 			'eyes-open': open
-		});
+		});		
 
 		return (
 			<div className="password-input">

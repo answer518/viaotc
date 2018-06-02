@@ -25,7 +25,7 @@ class SmsInput extends Component {
 	getSmsCode(){
 		const { param, onSmsIdChange, onSmsError, canGet, sms_action } = this.props;
 		if (!canGet) return;
-		ajax.post('/api/sms/send', {
+		ajax.post('/api/pc/sms/send', {
 			sms_action,
 			...param
 		})

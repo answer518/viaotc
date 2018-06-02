@@ -33,6 +33,9 @@ class DealCenterPublishSell extends Component {
 				pay_method: {
 					value: ["alipay"]
 				},
+				pay_info: {
+					value: []
+				},
 				is_fixed_price: {
 					value: '1' 
 				},
@@ -89,7 +92,7 @@ class DealCenterPublishSell extends Component {
 	}	
 
 	getAuthInfo(){
-		ajax.get('/api/auth/authinfo')
+		ajax.get('/api/pc/auth/authinfo')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -101,7 +104,7 @@ class DealCenterPublishSell extends Component {
 	getAdInfo(id){
 		const { fields } = this.state;
 
-		ajax.get('/api/ggs/gg_info', {id})
+		ajax.get('/api/pc/ggs/gg_info', {id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -143,9 +146,17 @@ class DealCenterPublishSell extends Component {
 	handleAdPost(values){
 		const { id } = this.props.location.query;
 		const { funds_password_status } = this.props.globalState;
-		const { pay_method, coin_type, funds_password, ...other } = values;
+		const { pay_info, coin_type, funds_password, ...other } = values;
+		let _pay_info = [];
+		let _pay_method = [];
+		pay_info.forEach(pay => {
+			let sp = pay.split(':');
+			_pay_method.push(sp[0]);
+			_pay_info.push(sp[1]);
+		})
 		let param = {
-			pay_method: pay_method.join(','),
+			pay_method: _pay_method.join(','),
+			pay_info: _pay_info.join(','),
 			ad_type: 'sell', 
 			coin_type: coin_type.toLowerCase(),
 			...other
@@ -156,9 +167,9 @@ class DealCenterPublishSell extends Component {
 		}	
 
 		if (id) {
-			this.publishAd('/api/ggs/edit', {...param, id}); 
+			this.publishAd('/api/pc/ggs/edit', {...param, id}); 
 		} else {
-			this.publishAd('/api/ggs/create', param);
+			this.publishAd('/api/pc/ggs/create', param);
 		}
 
 	}

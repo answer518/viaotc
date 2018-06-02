@@ -72,7 +72,7 @@ class CashOut extends Component {
 	}
 
 	cancle(id){
-		axios.get('/api/withdraw/cancle', {withdraw_id: id}).then(
+		axios.get('/api/pc/withdraw/cancle', {withdraw_id: id}).then(
 			d => {
 				if (String(d.error) == '0') {
 					this.setState({
@@ -170,7 +170,7 @@ class CashOut extends Component {
 				<Table
 					columns = {columns}
 					title = '提币记录' 
-					url ='/api/withdraw/records'
+					url ='/api/pc/withdraw/records'
 					tableKey ='records'
 					param = {{coin_type}}
 					forceUpdateTime = {forceUpdateTime}

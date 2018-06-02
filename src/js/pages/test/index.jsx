@@ -43,7 +43,7 @@ class Test extends Component {
 			                src: 4
 			            }																							
 			        ]}
-			        url="/api/ad"
+			        url="/api/pc/ad"
 			        param={{type: 'btc'}}
 				/>
 			</div>

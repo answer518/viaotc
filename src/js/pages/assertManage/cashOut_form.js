@@ -39,9 +39,9 @@ class CashOutForm extends Component {
 	};
 
 	componentDidMount(){
-		this.getData('/api/withdraw/minimal_amount','minimal_amount');
-		this.getData('/api/balance/detail','usable');
-		this.getData('/api/withdraw/fee','withdraw_fee');
+		this.getData('/api/pc/withdraw/minimal_amount','minimal_amount');
+		this.getData('/api/pc/balance/detail','usable');
+		this.getData('/api/pc/withdraw/fee','withdraw_fee');
 	}
 
 	checkNumber(rule, value, callback){
@@ -81,7 +81,7 @@ class CashOutForm extends Component {
 				//	params = {...other, ...param, funds_password: fundsPassword, fee: withdraw_fee};
 				//}
 
-				axios.post('/api/withdraw/do_withdraw', params)
+				axios.post('/api/pc/withdraw/do_withdraw', params)
 					.then((response) => {
 						const { error, msg = '', data } = response;
 						if (error == 0){

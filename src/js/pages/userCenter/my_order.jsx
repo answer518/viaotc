@@ -184,7 +184,7 @@ class MyOrder extends Component {
 
 	getMyOrders(pageReset){
 		const { order_status, page, coin_type } = this.state;
-		const url = `/api/orders/${urlMap[order_status]}`;
+		const url = `/api/pc/orders/${urlMap[order_status]}`;
 		const finalPage = pageReset ? 1 : page;
  		
  		this.setState({loading: true});
@@ -269,8 +269,8 @@ class MyOrder extends Component {
 					footer={null}
 				>
 					{appealVisible && <AppealForm 
-						url="/api/appeal/do_appeal"
-						action="/api/appeal/upload_img"
+						url="/api/pc/appeal/do_appeal"
+						action="/api/pc/appeal/upload_img"
 						order_id={currentOrderId}
 						onSuccess={this.handleAppeal}
 					/>}

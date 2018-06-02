@@ -23,7 +23,7 @@ class CancelDealModal extends Component {
 
 	cancelDeal(){
 		const { order_id, onSuccess } = this.props;
-		ajax.post('/api/orders/cancel', {order_id})
+		ajax.post('/api/pc/orders/cancel', {order_id})
 			.then((response) => {
 				const { error, msg } = response;
 				if(error == 0){

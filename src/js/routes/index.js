@@ -121,6 +121,9 @@ export const router = {
 				},{
 					path: 'identityInfo',
 					component: require('../pages/userCenter/identity_info').default
+				},{
+					path: 'myPayment',
+					component: require('../pages/userCenter/my_payment').default
 			}]
 		},
 		{

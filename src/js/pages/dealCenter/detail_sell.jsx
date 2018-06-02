@@ -40,7 +40,7 @@ class DealCenterDetailSell extends Component {
 	}			
  
 	getDetail(id){
-		ajax.get('/api/ggs/gg_info',{id})
+		ajax.get('/api/pc/ggs/gg_info',{id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0) {

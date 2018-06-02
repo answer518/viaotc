@@ -100,7 +100,7 @@ class DealInfoForm extends Component {
 					const { ad_id, type } = this.props;
 					if(!ad_id) return;
 					const { amount } = values;
-					ajax.post('/api/orders/create', {amount, ad_id})
+					ajax.post('/api/pc/orders/create', {amount, ad_id})
 						.then((response) => {
 							const { error, data, msg='' } = response;
 							if (error == 0){

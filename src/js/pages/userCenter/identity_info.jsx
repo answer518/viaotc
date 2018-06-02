@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux';
 const uploadProps = {
   name: 'avatar',
   accept: 'image/png, image/jpeg',
-  action: getUploadUrl('/api/user/upload_avatar'),
+  action: getUploadUrl('/api/pc/user/upload_avatar'),
   showUploadList: false,
   withCredentials: true,
   beforeUpload
@@ -46,7 +46,7 @@ class IdentityInfo extends Component {
 	}	
 
 	getUserInfo(){
-		ajax.get('/api/user/info')
+		ajax.get('/api/pc/user/info')
 			.then((response) => {
 				const { error, data } = response;
 				if(error == 0){
@@ -87,7 +87,7 @@ class IdentityInfo extends Component {
 			this.setState({edit: false});
 			return;
 		}
-		ajax.post('/api/user/set_username', {username: value})
+		ajax.post('/api/pc/user/set_username', {username: value})
 			.then((response) => {
 				const { error, msg } = response;
 				if (error == 0){
@@ -150,7 +150,6 @@ class IdentityInfo extends Component {
 							onCancel={this.handleCancel}
 							error={error}
 						/>
-						<span className="change-user-name" onClick={this.startUserNameEdit}>修改昵称</span>
 					</div>
 					<div className="info-list">
 						<span className="label">姓名：</span>

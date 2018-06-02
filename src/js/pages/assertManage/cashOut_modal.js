@@ -35,7 +35,7 @@ class CashOutModal extends Component {
 		this.props.form.validateFields((err, values) => {
 			console.log('value',values)
 			if (!err) {
-				axios.post('/api/withdraw_addr/add_security_addr',values).then(
+				axios.post('/api/pc/withdraw_addr/add_security_addr',values).then(
 					d => {
 						if(d.error){
 							this.setState(d.msg)

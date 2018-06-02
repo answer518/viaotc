@@ -60,7 +60,7 @@ class CashAdres extends Component {
 		this.setState({
 			loading:true
 		})
-		axios.get('/api/withdraw_addr/delete',{addr_id:id}).then(
+		axios.get('/api/pc/withdraw_addr/delete',{addr_id:id}).then(
 			d => {
 				if(String(d.error) =='0'){
 					this.getAddress()
@@ -75,7 +75,7 @@ class CashAdres extends Component {
 	}
 
 	getCoinType(){
-		axios.get('/api/market/coin_type',{}).then(
+		axios.get('/api/pc/market/coin_type',{}).then(
 			d => {
 				this.getAddress(d.data[0])
 				this.setState({
@@ -93,7 +93,7 @@ class CashAdres extends Component {
 			this.setState({
 				loading:true
 			});
-			axios.get('/api/withdraw_addr',{coin_type}).then(
+			axios.get('/api/pc/withdraw_addr',{coin_type}).then(
 				d => {
 					this.setState({
 						adresList:d.data.addrs,

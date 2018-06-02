@@ -56,7 +56,6 @@ export const statusMap = {
 };
 
 export const tradeStatusMap = {
-	0: '未激活',
 	1: '正常显示',
 	4: '后台禁止',
 	3: '已完成',
@@ -77,7 +76,7 @@ export const coinTips = {
 		'您的充值地址不会经常改变，可以重复充值；如有更改，我们会尽量通过网站公告等方式通知您。',
 		'请务必确认电脑及浏览器安全，防止信息被篡改或泄露。'
 	],
-	'bcc': [
+	'bch': [
 		'请勿向上述地址充值任何非BCC资产，否则资产将不可找回。',
 		'您充值至上述地址后，需要整个网络节点的确认，2次网络确认后到账，6次网络确认后可提币。',
 		'最小充值金额：0.01 BCC，小于最小金额的充值将不会上账。',
@@ -209,11 +208,11 @@ export const getBaseUrl = () => {
 };
  
 export const getAvatar = (avatar) => { 
-	return avatar ? `${window.OTC.upload_url}${avatar}` : `${window.OTC.cdn_url}/www/default.png`;
+	return avatar ? `${window.OTC.upload_url || ''}${avatar}` : `${window.OTC.cdn_url || ''}/www/default.png`;
 }
 
 export const getUploadUrl = (url) => {
-	return `${window.OTC.api_url}${url}`
+	return `${window.OTC.api_url || ''}${url}`
 }
 
 export const getRandom = (n,m) => {

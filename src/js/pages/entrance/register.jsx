@@ -94,7 +94,7 @@ class Register extends Component {
 	      		...other
 	      	};
 
-	      	ajax.post('/api/register/do_register', param) 
+	      	ajax.post('/api/pc/register/do_register', param) 
 	      		.then((response) => {
 	      			const { error, msg='' } = response;
 	      			if (error == 0) {
@@ -160,7 +160,7 @@ class Register extends Component {
 						</FormItem>
 						<div className="captcha-code">
 							<img 
-								src={`${window.OTC.api_url}/api/captcha?${timeStamp}`}
+								src={`${window.OTC.api_url}/api/pc/captcha?${timeStamp}`}
 								onClick={this.refreshCode}
 							/>						
 						</div>

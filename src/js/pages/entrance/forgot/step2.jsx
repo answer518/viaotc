@@ -37,7 +37,7 @@ class Step2 extends Component {
 	}	
 
 	checkStep1Complete(){
-		ajax.get('/api/find_password/is_account_verified')
+		ajax.get('/api/pc/find_password/is_account_verified')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -53,7 +53,7 @@ class Step2 extends Component {
 	}
 
 	checkPhoneOrGa(param){
-		ajax.post('/api/find_password/verify_security', param)
+		ajax.post('/api/pc/find_password/verify_security', param)
 			.then((response) => {
 				const { error, msg } = response;
 				if (error == 0){

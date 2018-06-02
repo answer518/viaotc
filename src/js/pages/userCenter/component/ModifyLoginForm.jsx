@@ -42,7 +42,7 @@ class ModifyLoginForm extends Component {
 		this.props.form.validateFields((err, fieldsValue) => {
 			if (!err) {
 				const { old_password='', new_password='', ...other } = fieldsValue;
-				ajax.post('/api/change_password/do_change', {
+				ajax.post('/api/pc/change_password/do_change', {
 					...other,
 					old_password: MD5(old_password),
 					new_password: MD5(new_password),

@@ -23,7 +23,7 @@ class DealIdentifiy extends Component {
 	}
 
 	getAuthInfo(){
-		ajax.get('/api/security/info')
+		ajax.get('/api/pc/security/info')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){

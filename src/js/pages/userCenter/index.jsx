@@ -36,6 +36,10 @@ class UserAbout extends Component {
 			name: '身份信息',
 			to: '/app/userCenter/identityInfo',
 			icon: 'user'
+		},{
+			name: '支付方式',
+			to: '/app/userCenter/myPayment',
+			icon: 'payment'
 		}]
 	};
 

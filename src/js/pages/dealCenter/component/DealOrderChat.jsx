@@ -63,7 +63,7 @@ class DealOrderChat extends Component {
 	getChartStart(order_id){
 		const { onStatusChange } = this.props;
 		
-		ajax.get('/api/chat/get_token', {order_id})
+		ajax.get('/api/pc/chat/get_token', {order_id})
 			.then((response) => {
 				const { error, data} = response;
 				if(error == 0){
@@ -100,11 +100,11 @@ class DealOrderChat extends Component {
 	}
 
 	getChangeToRead(last_time, order_id){
-		ajax.get('/api/chat/change_to_read', {last_time, order_id});
+		ajax.get('/api/pc/chat/change_to_read', {last_time, order_id});
 	}
 
 	getHistoryChat(param){
-		ajax.get('/api/chat/get_history', param)
+		ajax.get('/api/pc/chat/get_history', param)
 			.then((response) => {
 				const { error, data } = response;
 				this.ticking = false;
@@ -135,7 +135,7 @@ class DealOrderChat extends Component {
 	}
 
 	getLastChat(order_id){
-		ajax.get('/api/chat/get_history', {order_id})
+		ajax.get('/api/pc/chat/get_history', {order_id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -152,7 +152,7 @@ class DealOrderChat extends Component {
 	postChatMessage(content){
 		const { order_id } = this.props;
 		if (!order_id) return;
-		ajax.post('/api/chat/send', {order_id, content})
+		ajax.post('/api/pc/chat/send', {order_id, content})
 			.then((response) => {});
 	}
 

@@ -87,7 +87,7 @@ class Header extends Component {
 
 	logout(){
 		const { actions } = this.props;
-		ajax.get('/api/logout')
+		ajax.get('/api/pc/logout')
 			.then((response) => {
 				if (response.error == 0){
 					actions.userLogout();

@@ -33,7 +33,7 @@ class Step3 extends Component {
 	}
 
 	checkStep2Complete(){
-		ajax.get('/api/find_password/is_security_verified')
+		ajax.get('/api/pc/find_password/is_security_verified')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -68,7 +68,7 @@ class Step3 extends Component {
 	}		
 
 	resetPassword(param){
-		ajax.post('/api/find_password/reset', param)
+		ajax.post('/api/pc/find_password/reset', param)
 			.then((response) => {
 				const { error, msg='' } = response;
 				if (error == 0){

@@ -30,11 +30,14 @@ class DealForm extends Component {
 		super(props);
 		this.state = {
 			coin_price: 0,
-			sellable: 0
+			sellable: 0,
+			payments_info: [],
+			realname: ''
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleSelectChange = this.handleSelectChange.bind(this);
 		this.checkSellable = this.checkSellable.bind(this);
+		this.checkPrice = this.checkPrice.bind(this);
 	}
 
 	componentDidMount(){
@@ -42,6 +45,8 @@ class DealForm extends Component {
 		const { coin_type } = this.props.fields;
 		type == 'sell' && this.getBalanceDetail(coin_type.value || 'btc');
 		this.getCoinPrice(coin_type.value || 'btc');
+		this.getPaymentsInfo();
+		this.getUserInfo();
 	}
 
 	// componentWillReceiveProps(nextProps){
@@ -71,8 +76,40 @@ class DealForm extends Component {
 		this.getCoinPrice(value);
 	}
 
+	getPaymentsInfo(){
+		ajax.get('/api/pc/pay/get_pay_infos', {})
+			.then((response) => {
+				const { code, data } = response;
+				if (code == 0){
+					const { alipay, weixin, bank_transfer } = data;
+	                const payments_info = [];
+	                if (alipay != null && alipay.length > 0) {
+	                    payments_info.push(...alipay.map(e => {return {pay_method: 'alipay', ...e}}))
+	                }
+	                if (weixin != null && weixin.length > 0) {
+	                    payments_info.push(...weixin.map(e => {return {pay_method: 'weixin', ...e}}))
+	                }
+	                if (bank_transfer != null && bank_transfer.length > 0) {
+	                    payments_info.push(...bank_transfer.map(e => {return {pay_method: 'bank_transfer', ...e}}))
+	                }
+	                this.setState({payments_info});
+				}
+			})
+	}
+
+    getUserInfo(){
+        ajax.get('/api/pc/user/info').then((response) => {
+            const { error, data } = response;
+            if (error == 0){
+                const { realname } = data.userinfo;
+                this.setState({realname});
+            }
+        })
+        
+    }
+
 	getBalanceDetail(coin_type){//获取资产详情
-		ajax.get('/api/balance/detail', {coin_type, type: 'sellable'})
+		ajax.get('/api/pc/balance/detail', {coin_type, type: 'sellable'})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -82,7 +119,7 @@ class DealForm extends Component {
 	}
 
 	getCoinPrice(coin_type){
-		ajax.get('/api/market/coin_price', {coin_type})
+		ajax.get('/api/pc/market/coin_price', {coin_type})
 			.then((response) => {
 				const { error, data } = response;
 				this.setState({coin_price: data.price})
@@ -120,6 +157,23 @@ class DealForm extends Component {
 		}		
 	}
 
+	checkPremiumRange(rule, value, callback){
+		if (value > 20 || value < -10){ 
+			callback('溢价范围必须在 -10% 到 20% 之间')
+		} else {
+			callback();
+		}
+	}
+
+	checkPrice(rule, value, callback){
+		const coin_price = this.state.coin_price;
+		if (value > coin_price * 1.2 || value < coin_price * 0.8) {
+			callback('固定价格必须在市场参考价的 80% 到 120% 之间')
+		} else {
+			callback();
+		}
+	}
+
 	checkNumber(rule, value, callback){
 		const numberValue = Number(value);
 		if (isNaN(numberValue)) {
@@ -142,7 +196,7 @@ class DealForm extends Component {
 
 	render(){
 		const { type, form, error, timeStamp, fields, id } = this.props;
-		const { coin_price, sellable } = this.state;
+		const { coin_price, sellable, payments_info, realname } = this.state;
 		const { getFieldDecorator, getFieldsValue, getFieldError } = form;
 		const { coin_type, currency, premium, is_fixed_price } = fields;
 
@@ -152,7 +206,6 @@ class DealForm extends Component {
 		const isFixedPriceValue = Number(is_fixed_price.value);
 		const numberPremium = Number(premiumValue)
 		const premium_price = isNaN(numberPremium) ? 0 : (coin_price * (1 + numberPremium * 0.01)).toFixed(2);
-
 		return (
 			<div className="form-container publish-form especially-form">
 				<input type="password" style={{display: 'none'}} name="funds_password"/>				
@@ -203,6 +256,9 @@ class DealForm extends Component {
 					<label>
 						<b>*</b><span>{type == 'sell' ? '收款' : '付款'}方式：</span>
 					</label>
+					{
+					type == 'buy'
+					?
 					<div className="form-item-content">
 						{
 							getFieldDecorator('pay_method', {
@@ -216,6 +272,34 @@ class DealForm extends Component {
 							)
 						}
 					</div>
+					:
+					<div className="form-item-content" style={{width: '450px'}}>
+						{
+							getFieldDecorator('pay_info', {
+								rules: [{required: true, message: `请选择${type == 'sell' ? '收款' : '付款'}方式`}]
+							})(
+								<CheckboxGroup>
+									{
+										payments_info.map((pay, i) => {
+											return (
+												<Checkbox value={pay.pay_method + ':' + pay.id} key={i} style={{display: 'block', marginLeft: 0}}>
+												{
+													pay.pay_method === 'weixin' ?
+													`微信支付 ${realname} ${pay.account}`
+													: (pay.pay_method === 'alipay' ?
+													`支付宝 ${realname} ${pay.account}`
+													:
+													`银行转账 ${realname} ${pay.bank_account}`)
+												}
+												</Checkbox>
+											)
+										})
+									}
+								</CheckboxGroup>
+							)
+						}
+					</div>
+					}
 				</FormItem>
 				<FormItem
 					className="form-item"
@@ -249,7 +333,8 @@ class DealForm extends Component {
 									validateFirst: true,
 									rules: [
 										{required: true, message: '请输入溢价率'},
-										this.checkNumber
+										this.checkNumber,
+										this.checkPremiumRange
 									]
 								})(
 									<Input className="lg"/>
@@ -257,7 +342,7 @@ class DealForm extends Component {
 							}
 							<div className="unit" style={{top: 0}}>%</div>
 							<div className="tip">市场参考价：<span className="price">{coin_price || 0}</span>
-							{currencyValue}/{coinTypeValue}<span className="labx" style={{marginLeft: '10px'}}>计算公式：{`Bitfinex*${(1 + (Number(premiumValue) || 0) * 0.01).toFixed(2)}`}</span></div>
+							{currencyValue}/{coinTypeValue}<span className="labx" style={{marginLeft: '10px'}}>计算公式：{`Bitfinex*${(1 + (Number(premiumValue) || 0) * 0.01).toFixed(2)}`} 范围：-10% - 20%</span></div>
 						</div>
 					</FormItem>
 					<div className="form-item clearfix" style={{padding: '10px 0'}}>
@@ -282,7 +367,8 @@ class DealForm extends Component {
 									validateFirst: true,
 									rules: [
 										{required: true, message: '请输入交易价格'},
-										this.checkNumber
+										this.checkNumber,
+										this.checkPrice
 									]
 								})(
 									<Input className="lg"/>

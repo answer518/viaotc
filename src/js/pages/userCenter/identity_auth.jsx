@@ -77,7 +77,7 @@ class IdentityAuth extends Component {
 	}
 
 	getAuthInfo(){
-		ajax.get('/api/auth/authinfo')
+		ajax.get('/api/pc/auth/authinfo')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -124,7 +124,7 @@ class IdentityAuth extends Component {
 			return;
 		}
 
-		ajax.post('/api/auth/set_authinfo', param)
+		ajax.post('/api/pc/auth/set_authinfo', param)
 			.then((response) => {
 				const { error, msg } = response;
 				if (error == 0){

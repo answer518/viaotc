@@ -55,7 +55,7 @@ class CashAdresForm extends Component {
 					params = {...param, ...other, funds_password: fundsPassword};
 				} 
 
-				axios.post('/api/withdraw_addr/add', params)
+				axios.post('/api/pc/withdraw_addr/add', params)
 					.then((response) => {
 						const { error, msg='' } = response;
 						if (error == 0) {

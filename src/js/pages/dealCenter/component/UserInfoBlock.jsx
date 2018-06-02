@@ -20,7 +20,7 @@ class UserInfoBlock extends Component {
 
 	handleTrust(){
 		const { onInfoUpdate, user_id } = this.props;
-		ajax.post('/api/trust/do_trust', {trust_id: user_id})
+		ajax.post('/api/pc/trust/do_trust', {trust_id: user_id})
 			.then((response) => {
 				if (response.error == 0) {
 					onInfoUpdate && onInfoUpdate();
@@ -30,7 +30,7 @@ class UserInfoBlock extends Component {
 
 	handleShield(){
 		const { onInfoUpdate, user_id } = this.props;
-		ajax.post('/api/shield/do_shield', {shield_id: user_id})
+		ajax.post('/api/pc/shield/do_shield', {shield_id: user_id})
 			.then((response) => {
 				if (response.error == 0) {
 					onInfoUpdate && onInfoUpdate();
@@ -83,25 +83,8 @@ class UserInfoBlock extends Component {
 					{/*<div className="deal-info-detail">
 						<p className="title">交易总量</p>
 						<div className="number">276</div>
-					</div>*/}
-					<div className="deal-info-detail">
-						<p className="title">信任人数</p>
-						<div className="number">{trusted_num || 0}</div>
-					</div>
-				</div>
+					</div>*/}				</div>
 				<div className="deal-info-operation">
-					<Button
-						type="primary"
-						style={{marginRight: '20px'}}
-						onClick={this.handleTrust}
-						disabled={is_trusted || isSelf}
-						className={trustCls}
-					>{is_trusted ? '已信任' : '信任'}</Button>
-					<Button
-						className={shieldCls}
-						onClick={this.handleShield}
-						disabled={is_shielded || isSelf}
-					>{is_shielded ? '已屏蔽' : '屏蔽'}</Button>
 				</div>
 			</div>
 		)

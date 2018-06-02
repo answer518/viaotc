@@ -29,7 +29,7 @@ class AssertManage extends Component {
 	getAuthInfo(){
 		const { funds_password_status } = this.props.globalState;
 
-		axios.get('/api/auth/authinfo')
+		axios.get('/api/pc/auth/authinfo')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -90,7 +90,7 @@ class AssertManage extends Component {
 					title = '资产管理'
 					extral = {<Link to ='/app/assetManage/cashAdres'><span style={{fontSize: '14px'}}>提币地址管理</span></Link>}
 					pagination = {false}
-					url = '/api/balance'
+					url = '/api/pc/balance'
 					tableKey ='balance'
 					rowKey={this.rowKey}
 				/>

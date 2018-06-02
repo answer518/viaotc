@@ -70,7 +70,7 @@ class DealCenterPublishBuy extends Component {
 	getAdInfo(id){
 		const { fields } = this.state;
 
-		ajax.get('/api/ggs/gg_info', {id})
+		ajax.get('/api/pc/ggs/gg_info', {id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -126,9 +126,9 @@ class DealCenterPublishBuy extends Component {
 		}	
 
 		if (id) {
-			this.publishAd('/api/ggs/edit', {...param, id});
+			this.publishAd('/api/pc/ggs/edit', {...param, id});
 		} else {
-			this.publishAd('/api/ggs/create', param);
+			this.publishAd('/api/pc/ggs/create', param);
 		}
 	}
 

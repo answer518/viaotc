@@ -24,7 +24,7 @@ class SecureSetting extends Component {
 	}
 
 	getSecureSetting(){
-		ajax.get('/api/security/info')
+		ajax.get('/api/pc/security/info')
 			.then((response) => {
 				const { error, data } = response;
 				this.setState({

@@ -116,7 +116,7 @@ class DealCenterSellList extends Component {
 				/>
 				<div className="deal-center-list-body">
 					<DealListTableWrap
-						url="/api/ggs/gg_list"
+						url="/api/pc/ggs/gg_list"
 						param={{coin_type, ad_type: 'buy', currency, pay_method}}
 						columns={columns}
 					/>

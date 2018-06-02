@@ -106,7 +106,7 @@ class TradeInfo extends Component {
 	}
 
 	handleActive(id){
-		ajax.get('/api/ggs/activate', {id})
+		ajax.get('/api/pc/ggs/activate', {id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -125,7 +125,7 @@ class TradeInfo extends Component {
 		const finalPage = pageReset ? 1 : page;
 		this.setState({loading: true});
 
-		ajax.get('/api/ggs/my_ggs', {page: finalPage, coin_type, type, status})
+		ajax.get('/api/pc/ggs/my_ggs', {page: finalPage, coin_type, type, status})
 			.then((response) => {
 				const { error, data } = response;
 				this.setState({loading: false});

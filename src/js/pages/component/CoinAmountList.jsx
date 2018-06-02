@@ -48,7 +48,7 @@ class CoinAmountList extends Component {
 	}
 
 	getBalance(){
-		ajax.get('/api/balance')
+		ajax.get('/api/pc/balance')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){

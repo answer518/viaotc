@@ -38,16 +38,9 @@ class SettingFundForm extends Component {
 		this.setState({sms_id: id});
 	}
 
-	checkPasswordStrength(rule, value, callback){
-		if (passwordStrength(value) < 2){
-			callback('密码强度太低');
-		}
-		callback();
-	}
-
-	checkPasswordLength(rule, value, callback){
-		if (value.length < 8 || value.length > 20){
-			callback('密码长度为8-20位');
+	checkPassword(rule, value, callback){
+		if (!/^[0-9]{6}$/.test(value)){
+			callback('资金密码必须为6位数字');
 		}
 		callback();
 	}	
@@ -90,9 +83,9 @@ class SettingFundForm extends Component {
 				}
 
 				if (isFundReset) {
-					this.setFundsPassword('/api/funds_password/update', param);
+					this.setFundsPassword('/api/pc/funds_password/update', param);
 				} else {
-					this.setFundsPassword('/api/funds_password/set', param);
+					this.setFundsPassword('/api/pc/funds_password/set', param);
 				}
 
 			}
@@ -116,10 +109,9 @@ class SettingFundForm extends Component {
 									validateFirst: true,								
 									rules: [
 										{required: true, message: '请输入资金密码'},
-										this.checkPasswordLength,
-										this.checkPasswordStrength										
+										this.checkPassword									
 									]
-								})(<PasswordInput placeholder="请输入资金密码" hasRule={true}/>)
+								})(<PasswordInput placeholder="请输入资金密码" maxLength="6" hasRule={false}/>)
 							}
 						</div>
 					</FormItem>

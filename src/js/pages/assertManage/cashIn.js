@@ -27,7 +27,7 @@ class CashIn extends Component {
 
 	getAddress(){
 		let {coin_type} = this.state;
-		axios.get('/api/recharge_addr',{coin_type:coin_type}).then((response) => {
+		axios.get('/api/pc/recharge_addr',{coin_type:coin_type}).then((response) => {
 			const { error, data, msg='' } = response;
 			if (error == 0){
 				this.setState({addr: data.addr});
@@ -119,7 +119,7 @@ class CashIn extends Component {
 				<Table
 					columns = {columns}
 					title = '充值记录'
-					url = '/api/recharge/records'
+					url = '/api/pc/recharge/records'
 					tableKey ='records'
 					param={{coin_type: getUrlParam('coin_type')}}
 				/>

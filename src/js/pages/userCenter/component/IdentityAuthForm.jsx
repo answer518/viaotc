@@ -254,7 +254,7 @@ class IdentityAuthForm extends Component {
 									<FormUploadItem 
 										name="card_front"
 										text="身份证正面照"
-										action='/api/auth/upload_card'
+										action='/api/pc/auth/upload_card'
 										data={{type: 'card_front'}}		
 										uploadImg={card_front}									
 									/>
@@ -271,7 +271,7 @@ class IdentityAuthForm extends Component {
 									<FormUploadItem 
 										name="card_back"
 										text="身份证背面照"
-										action='/api/auth/upload_card'
+										action='/api/pc/auth/upload_card'
 										data={{type: 'card_back'}}	
 										uploadImg={card_back}												
 									/>
@@ -288,7 +288,7 @@ class IdentityAuthForm extends Component {
 									<FormUploadItem  
 										name="card_front_hand"
 										text="手持证件照"
-										action='/api/auth/upload_card'
+										action='/api/pc/auth/upload_card'
 										data={{type: 'card_front_hand'}}
 										uploadImg={card_front_hand}											
 									/>

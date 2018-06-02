@@ -80,7 +80,7 @@ class DealInfoDetailBlock extends Component {
 	}
 
 	getAuthInfo(){
-		ajax.get('/api/auth/authinfo')
+		ajax.get('/api/pc/auth/authinfo')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -118,7 +118,7 @@ class DealInfoDetailBlock extends Component {
 	}
 
 	getBalanceDetail(coin_type){//获取资产详情
-		ajax.get('/api/balance/detail', {coin_type, type: 'sellable'})
+		ajax.get('/api/pc/balance/detail', {coin_type, type: 'sellable'})
 			.then((response) => {
 				const { error, data } = response;
 				if (isEmpty(data)) return;
@@ -130,7 +130,7 @@ class DealInfoDetailBlock extends Component {
 		const { min_amount, max_amount, is_fixed_price } = info;
 		const infoPrice = info.price;
 
-		ajax.get('/api/market/coin_price',{coin_type})
+		ajax.get('/api/pc/market/coin_price',{coin_type})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){

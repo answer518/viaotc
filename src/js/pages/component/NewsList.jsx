@@ -46,7 +46,7 @@ class NewsList extends Component {
 	}
 
 	getSystemMsg(){
-		ajax.get('/api/message/my_msg?page=1&page_size=1&unread=1')
+		ajax.get('/api/pc/message/my_msg?page=1&page_size=1&unread=1')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -62,7 +62,7 @@ class NewsList extends Component {
 
 	getUnreadGroup(){
 		if (this.timer) {clearTimeout(this.timer)}
-		ajax.get('/api/chat/get_unread_group', {}, 1)
+		ajax.get('/api/pc/chat/get_unread_group', {}, 1)
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0) {

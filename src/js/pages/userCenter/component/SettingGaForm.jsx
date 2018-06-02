@@ -37,7 +37,7 @@ class SettingGaForm extends Component {
 	}
 
 	getGaKey(){
-		ajax.get('/api/ga/get_key')
+		ajax.get('/api/pc/ga/get_key')
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -57,7 +57,7 @@ class SettingGaForm extends Component {
 
 		this.props.form.validateFields((err, fieldsValue) => {
 			if (!err) {
-				ajax.post('/api/ga/bind', {
+				ajax.post('/api/pc/ga/bind', {
 					...fieldsValue,
 					phone: window.OTC.phone,
 					area_code: '0086',

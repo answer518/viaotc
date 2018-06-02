@@ -35,7 +35,7 @@ class DealSell extends Component {
 
 	getOrderStatus(){
 		const { order_id } = this.props.location.query;
-		ajax.get('/api/orders/get_status', {order_id})
+		ajax.get('/api/pc/orders/get_status', {order_id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -56,7 +56,7 @@ class DealSell extends Component {
 	}
 
 	getDetail(order_id){
-		ajax.get('/api/orders/partner_info',{order_id})
+		ajax.get('/api/pc/orders/partner_info',{order_id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0) {

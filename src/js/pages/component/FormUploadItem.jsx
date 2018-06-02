@@ -27,7 +27,7 @@ class FormUploadItem extends Component {
 	      	onChange && onChange(image_url);
 	      	message.success(`${info.file.name}上传成功`);
 	      }	else {
-	      	message.error(`${info.file.name}上传失败, ${getErrorMsg(lastFileList[0].response.msg||'')}`);
+	      	message.error(`${info.file.name}上传失败, ${getErrorMsg(lastFileList[0].response.msg||'未知错误')}`);
 	      }	
 	    } else if (info.file.status === 'error') {
 	      message.error(`${info.file.name}上传失败`);
