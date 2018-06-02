@@ -1,7 +1,5 @@
 *.iml
-.idea/
-.ipr
-.iws
+.vscode/
 *~
 ~*
 *.diff

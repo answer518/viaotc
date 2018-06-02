@@ -67,7 +67,7 @@ class DealSell extends Component {
 
 	render(){
 		const { order_id } = this.props.location.query;
-		const { avatar, ga_status } = this.props.globalState;
+		const { avatar, funds_password_status } = this.props.globalState;
 		const { info, chatStatus } = this.state;
 
 		return (
@@ -91,7 +91,7 @@ class DealSell extends Component {
 						className="fr"
 						type="sell"
 						order_id={order_id}
-						ga_status={ga_status}
+						funds_password_status={funds_password_status}
 						chatStatus={chatStatus}
 					/>
 				</div>

@@ -143,7 +143,7 @@ class DealOrderInfo extends Component {
 	}
 
 	render(){
-		const { className, type, order_id, ga_status, chatStatus } = this.props;
+		const { className, type, order_id, funds_password_status, chatStatus } = this.props;
 		const { cancelVisible, payVisible, receiptVisible, appealVisible, expect_period_time } = this.state;
 		const { order_num='', coin_type='', coin_price='', currency='', pay_method=[], expect_period='', 
 		amount=0, remaining_time='', currency_amount=0, status='' } = this.state.order;
@@ -323,7 +323,7 @@ class DealOrderInfo extends Component {
 						param={{order_id}}						
 						onSuccess={this.dealReceiptOk}
 						style={{paddingLeft: '140px'}}
-						ga_status={ga_status}
+						funds_password_status={funds_password_status}
 					/>
 					</div>}
 				</Modal>

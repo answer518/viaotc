@@ -370,7 +370,8 @@ class DealForm extends Component {
 
 							})(
 								<Select style={{width: 458}}>
-									<Option value="30">30分钟</Option>
+									<Option value="20">20分钟</Option>
+									<Option value="40">40分钟</Option>
 									<Option value="60">60分钟</Option>
 								</Select>
 							)

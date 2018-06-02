@@ -5,6 +5,7 @@ import FormButton from 'pages/component/FormButton';
 import SmsInput from 'pages/component/SmsInput';
 import ajax from 'utils/request';
 import { getErrorMsg, formatPhone } from 'utils/util';
+import MD5 from 'md5';
 
 const FormItem = Form.Item;
 
@@ -33,15 +34,16 @@ class UnfreezeForm extends Component {
 
 	handleSubmit(e){
 		e.preventDefault();
-		const { url, param, onSuccess, ga_status } = this.props;
+		const { url, param, onSuccess, funds_password_status } = this.props;
 		const { sms_id } = this.state;
 
 	   	this.props.form.validateFields((err, values) => {
       		if (!err) {
       			let params = { ...values, ...param,  sms_action: 5, sms_id, phone: window.OTC.phone || '', area_code: '0086'};
       			
-      			if (ga_status == 1){
-      				params = {...values, ...param}
+      			if (funds_password_status == 1) {
+					const new_params = { funds_password : MD5(params.funds_password)}
+      				params = {...values, ...param, ...new_params }
       			}
 
       			ajax.post(url, params)
@@ -60,27 +62,27 @@ class UnfreezeForm extends Component {
 
 
 	render(){
-		const { text, ga_status } = this.props;
+		const { text, funds_password_status } = this.props;
 		const { timeStamp, error } = this.state;
 		const { getFieldDecorator, getFieldsValue } = this.props.form;	
-		const { ga_code, sms_code } = getFieldsValue();	
+		const { funds_password, sms_code } = getFieldsValue();	
 		const phone = window.OTC.phone || '';
 		const area_code = '0086';
-		const isDisabled = ga_status == 1 ? !ga_code : !sms_code;
+		const isDisabled = funds_password_status == 1 ? !funds_password : !sms_code;
 
 		return (
 			<div className="form-container user-center-form especially-form">
 				{
-					ga_status == 1 
+					funds_password_status == 1 
 					? 	<div className="form-item" style={{padding: '0 150px 0 150px'}}>
-							<label>谷歌验证码：</label> 
+							<label>资金密码：</label> 
 							<FormItem>
 								<div className="form-item-content">
 									{
-										getFieldDecorator('ga_code', {
-											rules: [{required: true, message: '请输入谷歌验证码！'}]
+										getFieldDecorator('funds_password', {
+											rules: [{required: true, message: '请输入资金密码！'}]
 										})(
-											<Input placeholder="请输入谷歌验证码"/>
+											<Input placeholder="请输入资金密码"/>
 										)
 									}
 								</div>
