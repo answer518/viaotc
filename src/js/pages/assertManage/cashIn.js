@@ -74,15 +74,12 @@ class CashIn extends Component {
 				render:(value,record)=>{
 					switch (String(value)){
 						case ('0'):
-							return <span >未审核</span>;
+							return <span >待审核</span>;
 							break;
 						case ('1'):
-							return <span > 取消</span>;
-							break;
-						case ('2'):
 							return <span className ="status_success">审核通过</span>;
 							break;
-						case ('3'):
+						case ('2'):
 							return <span className ="status_fail">审核拒绝：拒绝原因 +{record.remark}</span>;
 							break;
 					}

@@ -130,8 +130,8 @@ class TradeInfo extends Component {
 				const { error, data } = response;
 				this.setState({loading: false});
 				if (error == 0) {
-					const { Ads, page, page_size, total } = data;
-					this.setState({ads: Ads, page_size, page, total});
+					const { ads, page, page_size, total } = data;
+					this.setState({ads: ads, page_size, page, total});
 				}
 			}) 
 	}
