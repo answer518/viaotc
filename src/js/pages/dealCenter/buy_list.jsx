@@ -41,7 +41,7 @@ const columns = [{
 	key: 'min_amount',
 	width: '11%',
 	render: (text, record) => {
-		return `${text}-${record.max_amount}`
+		return `${text}-${record.max_amount} ${record.coin_type.toUpperCase()}`
 	}
 },{
 	title: '付款方式',

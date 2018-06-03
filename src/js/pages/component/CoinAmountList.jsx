@@ -7,7 +7,12 @@ import ajax from 'utils/request';
 const columns = [{
 	title: '币种',
 	dataIndex: 'coin_type',
-	key: 'coin_type'
+	key: 'coin_type',
+	render:(value,record)=>{
+		return (
+			<span>{value.toUpperCase()}</span>
+		)
+	}
 },{
 	title: '可用',
 	dataIndex: 'usable',

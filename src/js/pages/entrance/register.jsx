@@ -42,13 +42,21 @@ class Register extends Component {
 
 		const phone = value.replace(/(^\s*)|(\s*$)/g, '');
 		if(!/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
-			callback('请输入合法的手机号!')
+			return callback('请输入合法的手机号!')
 		}
 		callback();
 	}
 
+	checkPasswordNoSpace(rule, value, callback){
+		if (/ /.test(value)) {
+			callback('密码不能包含空格');
+		} else {
+			callback();
+		}
+	}
+
 	checkPasswordStrength(rule, value, callback){
-		const mod = passwordStrength(value);
+		const mode = passwordStrength(value);
 
 		if (mode == 0 ) {
 			callback('密码强度太低');
@@ -56,23 +64,26 @@ class Register extends Component {
 			callback('密码强度中');
 		} else if (mode > 2){
 			callback('密码强度高');
+		} else {
+			callback();
 		}
-		callback();
 	}
 
 	checkPasswordLength(rule, value, callback){
 		if (value.length < 8 || value.length > 20){
 			callback('密码长度为8-20位');
+		} else {
+			callback();
 		}
-		callback();
 	}
 
 	checkNumber(rule, value, callback){
 		const numberValue = Number(value);
 		if (isNaN(numberValue)) {
 			callback('请输入数字');
+		} else {
+			callback();
 		}
-		callback();
 	}		
 
 	handleSmsIdChange(id){
@@ -193,6 +204,7 @@ class Register extends Component {
 									validateFirst: true,
 									rules: [
 										{required: true, message: '请设置您的密码！'},
+										this.checkPasswordNoSpace,
 										this.checkPasswordLength,
 										this.checkPasswordStrength
 									]

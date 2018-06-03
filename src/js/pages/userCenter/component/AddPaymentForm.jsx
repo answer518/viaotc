@@ -6,7 +6,7 @@ import FormButton from 'pages/component/FormButton';
 const FormItem = Form.Item;
 const Option = Select.Option;
 import MD5 from 'md5';
-import {formatPhone} from 'utils/util'
+import {formatPhone, getErrorMsg} from 'utils/util'
 import ajax from 'utils/request';
 import './AddPaymentForm.less';
 let successIcon = require('src/img/success_icon.png')
@@ -78,7 +78,8 @@ class AddPaymentForm extends Component {
                 ajax.post('/api/pc/pay/add_pay', param).then(
                     d => {
                         if(d.error){
-                            this.setState(d.msg)
+                            const errorMsg = getErrorMsg(msg);
+                            message.warn(errorMsg);
                         }else{
                             this.props.onSuccess && this.props.onSuccess()
                         }

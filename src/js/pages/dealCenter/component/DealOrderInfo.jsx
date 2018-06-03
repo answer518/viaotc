@@ -249,7 +249,7 @@ class DealOrderInfo extends Component {
 						}
 						{type == 'sell' && <div className="order-opreate-tip">
 							<p>请在买家付款完成后，点击<span style={{color: '#3665ff'}}>“付款完成”</span></p>
-							<p>平台在您确认付款后，通知卖家放行BTC</p>
+							<p>平台在您确认付款后，通知卖家放行{coin_type.toUpperCase()}</p>
 						</div>}					
 					</div>
 				</div>
@@ -277,7 +277,7 @@ class DealOrderInfo extends Component {
 					{payVisible && <div className="deal-tip deal-pay-tip">
 						<div className="pay-safe-blue tip-icon"></div>
 						<h4>您确认付款后，我们将通知卖家确认收款，卖家确认收款后</h4>
-						<h4>我们会将BTC放行至您的账户。</h4>
+						<h4>我们会将{coin_type.toUpperCase()}放行至您的账户。</h4>
 						<div className="notice">
 							<div className="inline warn"></div>
 							<span>未付款情况下，确认已付款将被视为恶意欺诈，您的账户将被锁定</span>

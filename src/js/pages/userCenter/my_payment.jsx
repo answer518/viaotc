@@ -219,7 +219,7 @@ class MyPayment extends Component {
                 </div> 
                 <Modal
                     visible={showAddModal}
-                    title="提交申请已提交"
+                    title="添加支付方式"
                     footer = {null}
                     width = {800}
                     onCancel={this.handleCancelModal.bind(this)}

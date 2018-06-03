@@ -49,7 +49,12 @@ class AssertManage extends Component {
 			{
 				title: '币种',
 				dataIndex: 'coin_type',  
-				key: 'coin_type'
+				key: 'coin_type',
+				render:(value,record)=>{
+					return (
+						<span>{value.toUpperCase()}</span>
+					)
+				}
 			},
 			{
 				title: '可用',
