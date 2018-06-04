@@ -190,7 +190,7 @@ class DealInfoDetailBlock extends Component {
 				 			</div> 
 				 			<div className="deal-info-detal-item">
 				 				<label>付款方式：</label> 
-				 				<div className="inline-middle">{pay_method.map((pay) => payMethodMap[pay]).join('/')}</div>
+				 				<div className="inline-middle">{pay_method.join('/')}</div>
 				 			</div>
 				 			<div className="deal-info-detal-item">
 				 				<label>交易限额：</label>

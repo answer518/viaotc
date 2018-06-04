@@ -48,7 +48,7 @@ class DealInfoTable extends Component {
 	}
 
 	getOtherAdsInfo(param){
-		ajax.get('/api/pc/ggs/other_ggs_info', param)
+		ajax.get('/api/pc/deals/other_deals_info', param)
 			.then((response) =>{
 				const { error, data } = response;
 				if (error == 0) {
