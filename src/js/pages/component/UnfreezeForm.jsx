@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Input } from 'antd';
 import FormButton from 'pages/component/FormButton';
 import SmsInput from 'pages/component/SmsInput';
+import PasswordInput from 'pages/component/PasswordInput';
 import ajax from 'utils/request';
 import { getErrorMsg, formatPhone } from 'utils/util';
 import MD5 from 'md5';
@@ -82,7 +83,7 @@ class UnfreezeForm extends Component {
 										getFieldDecorator('funds_password', {
 											rules: [{required: true, message: '请输入资金密码！'}]
 										})(
-											<Input placeholder="请输入资金密码"/>
+											<PasswordInput placeholder="请输入资金密码"/>
 										)
 									}
 								</div>
