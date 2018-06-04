@@ -201,8 +201,8 @@ class Register extends Component {
 									rules: [
 										{required: true, message: '请设置您的密码！'},
 										this.checkPasswordNoSpace,
-										this.checkPasswordLength,
-										this.checkPasswordStrength
+										this.checkPasswordLength//,
+										// this.checkPasswordStrength
 									]
 								})(
 									<PasswordInput 
