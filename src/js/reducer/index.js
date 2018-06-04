@@ -74,6 +74,12 @@ const Global = createReducer(initGlobal, {
 			...state,
 			funds_password_status: action.funds_password_status
 		}
+	},
+	[ActionType.UPDATE_PAY_STATSUS](state, action){
+		return {
+			...state,
+			pay_status: action.pay_status
+		}
 	}
 });
 

@@ -4,6 +4,9 @@ import classNames from 'classnames';
 import { browserHistory } from 'react-router';
 import { Popover, Modal, Form, Input, Select, Uploader, Button } from 'antd';
 import AddPaymentForm from './component/AddPaymentForm';
+import { connect } from 'react-redux';
+import * as globalAction from 'src/js/actions';
+import { bindActionCreators } from 'redux';
 import ajax from 'utils/request';
 import moment from 'moment';
 import './my_payment.less';
@@ -140,6 +143,8 @@ class MyPayment extends Component {
                     payments.push(...bank_transfer.map(e => {return {pay_method: 'bank_transfer', ...e}}))
                 }
                 this.setState({payments});
+
+                this.props.actions.updatePayStatus(payments.length > 0);
             }
         })
     }
@@ -255,4 +260,12 @@ class MyPayment extends Component {
     }
 }
 
-export default MyPayment
+function mapStateToProps(state) {
+    return {globalState: state}
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: bindActionCreators(globalAction, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyPayment);
