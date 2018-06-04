@@ -84,15 +84,14 @@ class DealInfoForm extends Component {
 	}
 
 	handleSubmit(e){
-		const { funds_password_status, auth_status } = this.props;
+		const { funds_password_status, auth_status, type } = this.props;
 		e.preventDefault();
 		
 		if (auth_status != 1 || funds_password_status != 1) {
+
 			browserHistory.push({
 				pathname : '/app/userCenter/dealIdentifiy',
-				query: {
-		          	type: '2'
-		        }
+				query: type === 'sell' ? {} : { type: '2'}
 			})
 		} else {
 			this.props.form.validateFields((err, values) => {
