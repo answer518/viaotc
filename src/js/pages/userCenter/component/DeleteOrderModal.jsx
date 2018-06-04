@@ -24,7 +24,7 @@ class DeleteOrderModal extends Component {
 	deleteOrder(){
 		const { id, onSuccess } = this.props;
 
-		ajax.get('/api/pc/ggs/delete', {id})
+		ajax.get('/api/pc/deals/delete', {id})
 			.then((response) => {
 				const { error, msg } = response;
 				if(error == 0){ 

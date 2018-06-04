@@ -38,7 +38,7 @@ class PasswordInput extends Component {
 	}
 
 	render(){
-		const { placeholder, value, onChange, hasRule } = this.props;
+		const { placeholder, value, onChange, hasRule, maxLength } = this.props;
 		const { open, showRule } = this.state; 
 		const eyeCls =classNames({
 			'common-bg': true,
@@ -50,6 +50,7 @@ class PasswordInput extends Component {
 			<div className="password-input">
 				<Input 
 					type={open ? 'text' : 'password'}
+					maxLength={maxLength}
 					placeholder={placeholder}
 					value={value}
 					onChange={onChange}

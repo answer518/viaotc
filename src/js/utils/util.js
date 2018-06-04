@@ -163,7 +163,7 @@ export const payMethodMap = {
 };
 
 //CharMode函数
-function CharMode(iN) {
+function charMode(iN) {
     if (iN >= 48 && iN <= 57) //数字
         return 1;
     if (iN >= 65 && iN <= 90) //大写字母
@@ -184,27 +184,52 @@ function bitTotal(num) {
     return modes;
 }
 
-export const passwordStrength = (password, minLength=8) => {
+function passwordModes (password) {
+    var modes = {
+        hasNumber: false,
+        hasLetter: false,
+        hasSymbol: false
+    };
+    for (var i = 0; i < password.length; i++) {
+        var mode = charMode(password.charCodeAt(i));
+        if (mode === 1) {
+            modes.hasNumber = true;
+        } else if (mode === 2 || mode === 4) {
+            modes.hasLetter = true;
+        } else {
+            modes.hasSymbol = true;
+        }
+    }
+    return modes;
+}
 
-    if (password == null || password == ''){
+export const passwordStrength = (password, minLength=8) => {
+    const len = password.length;
+    const modes = passwordModes(password);
+
+    if (password == null || password == '' || len < minLength){
         return 0;
     }
 
-    if (password.length < minLength){
-        return 0; //密码太短
+    if (len < 13) {
+        if (!modes.hasSymbol) {
+            return 0
+        } else {
+            return 1
+        }
+    } else if (len > 12 && len < 17) {
+        if (!modes.hasSymbol) {
+            return 1
+        } else {
+            return 2
+        }
+    } else {
+        return 2
     }
-
-    var Modes = 0;
-
-    for (var i = 0; i < password.length; i++) {
-        Modes |= CharMode(password.charCodeAt(i));
-    }
- 
-    return bitTotal(Modes);
 };
 
 export const getBaseUrl = () => { 
-	return window.OTC.cdn_url;
+	return window.OTC.cdn_url || '';
 };
  
 export const getAvatar = (avatar) => { 

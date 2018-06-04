@@ -166,9 +166,9 @@ class DealForm extends Component {
 	}
 
 	checkPrice(rule, value, callback){
-		const coin_price = this.state.coin_price;
+		const { coin_price, currency } = this.state;
 		if (value > coin_price * 1.2 || value < coin_price * 0.8) {
-			callback('固定价格必须在市场参考价的 80% 到 120% 之间')
+			callback(`必须在市场参考价(${coin_price} ${currency})的 80% 到 120% 之间`)
 		} else {
 			callback();
 		}

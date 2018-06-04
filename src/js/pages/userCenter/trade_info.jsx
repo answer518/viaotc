@@ -106,7 +106,7 @@ class TradeInfo extends Component {
 	}
 
 	handleActive(id){
-		ajax.get('/api/pc/ggs/activate', {id})
+		ajax.get('/api/pc/deals/activate', {id})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
@@ -125,13 +125,13 @@ class TradeInfo extends Component {
 		const finalPage = pageReset ? 1 : page;
 		this.setState({loading: true});
 
-		ajax.get('/api/pc/ggs/my_ggs', {page: finalPage, coin_type, type, status})
+		ajax.get('/api/pc/deals/my_deals', {page: finalPage, coin_type, type, status})
 			.then((response) => {
 				const { error, data } = response;
 				this.setState({loading: false});
 				if (error == 0) {
 					const { ads, page, page_size, total } = data;
-					this.setState({ads: ads, page_size, page, total});
+					this.setState({ads, page_size, page, total});
 				}
 			}) 
 	}

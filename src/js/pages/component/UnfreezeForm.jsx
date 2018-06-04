@@ -83,7 +83,7 @@ class UnfreezeForm extends Component {
 										getFieldDecorator('funds_password', {
 											rules: [{required: true, message: '请输入资金密码！'}]
 										})(
-											<PasswordInput placeholder="请输入资金密码"/>
+											<PasswordInput placeholder="请输入资金密码" maxLength={6} hasRule={false}/>
 										)
 									}
 								</div>

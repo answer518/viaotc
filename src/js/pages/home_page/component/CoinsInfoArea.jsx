@@ -46,7 +46,7 @@ class CoinsInfoArea extends Component {
 			<div className="coins-info-area">
 					<BlockExpandable 
 						blocks = {blocks}
-				        url="/api/pc/ggs/gg_list"
+				        url="/api/pc/deals/deal_list"
 					/>
 			</div>
 		)

@@ -60,10 +60,6 @@ class Register extends Component {
 
 		if (mode == 0 ) {
 			callback('密码强度太低');
-		} else if (mode >= 1 && mode <= 2){
-			callback('密码强度中');
-		} else if (mode > 2){
-			callback('密码强度高');
 		} else {
 			callback();
 		}

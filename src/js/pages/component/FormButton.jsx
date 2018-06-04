@@ -32,7 +32,7 @@ class FormButton extends Component {
 			this.setState({error: nextProps.error}, () => {
 				this.timer = setTimeout(() => {
 					this.setState({error: ''});
-				}, 800);
+				}, 5000);
 			});
 		}
 	}

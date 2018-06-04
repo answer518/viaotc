@@ -236,7 +236,7 @@ class AddPaymentForm extends Component {
                         {
                             getFieldDecorator('funds_password', {
                                 rules: [{required: true, message: '请输入资金密码！'}]
-                            })(<Input type="password" placeholder="请输入资金密码"/>)
+                            })(<Input type="password" placeholder="请输入资金密码" maxLength={6} hasRule={false}/>)
                         }
                     </div>
                 </FormItem>
