@@ -117,7 +117,7 @@ class DealCenterSellList extends Component {
 				<div className="deal-center-list-body">
 					<DealListTableWrap
 						url="/api/pc/deals/deal_list"
-						param={{coin_type, ad_type: 'buy', currency, pay_method}}
+						param={{coin_type, deal_type: 'buy', currency, pay_method}}
 						columns={columns}
 					/>
 				</div>
