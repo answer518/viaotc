@@ -155,7 +155,10 @@ class TradeInfo extends Component {
 					value={coin_type}
 			/>,
 			dataIndex: 'coin_type',
-			key: 'coin_type'
+			key: 'coin_type',
+			render: (text) => {
+				return text.toUpperCase()
+			}
 		},{
 			title: <TypeSelect 
 				width={65}

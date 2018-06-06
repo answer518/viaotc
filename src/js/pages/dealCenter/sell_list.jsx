@@ -83,9 +83,9 @@ class DealCenterSellList extends Component {
 
 	constructor(props){
 		super(props);
-		const { coin_type } = props.location.query || 'btc';
+		const { coin_type } = props.location.query || 'ETH';
 		this.state = {
-			coin_type: coin_type || 'btc',
+			coin_type: coin_type || 'ETH',
 			currency: 'CNY',
 			pay_method: '',
 			country: 'china'

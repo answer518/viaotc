@@ -142,6 +142,42 @@ class DealOrderInfo extends Component {
 
 	}
 
+	renderPayInfo () {
+		const { pay_method = [], pay_info = null } = this.state.order;
+
+		if (pay_info == null) {
+			return (
+				<div className="inline-middle">{pay_method.join('/')}</div>
+			)
+		} else {
+			return (
+				<div className="pay-info-block">
+					{pay_info.map((pay, i) => {
+						if (pay.pay_method === 'alipay') {
+							return <div className="pay-info-section pay-info-alipay" key={i}>
+								<span>{pay.realname} {pay.pay_info.pay_name} {pay.pay_info.account}</span>
+								<Popover content={<img src={pay.pay_info.qrcode} />} title="收款二维码">
+									<span className={`pay-info-qrcode pay-info-qrcode-${pay.pay_method}`}></span>
+								</Popover>
+							</div>
+						} else if (pay.pay_method === 'weixin') {
+							return <div className="pay-info-section pay-info-weixin" key={i}>
+								<span>{pay.realname} {pay.pay_info.pay_name} {pay.pay_info.account}</span>
+								<Popover content={<img src={pay.pay_info.qrcode} />} title="收款二维码">
+									<span className='pay-info-qrcode pay-info-qrcode-weixin'></span>
+								</Popover>
+							</div>
+						} else {
+							return <div className="pay-info-section pay-info-bank" key={i}>
+								<span>{pay.realname} {pay.pay_info.pay_name} {pay.pay_info.bank_account} {pay.pay_info.account_branch} {pay.pay_info.bank_card_num}</span>
+							</div>
+						}
+					})}
+				</div>
+			)
+		}
+	}
+
 	renderPayments () {
         const { pay_info=[], pay_method=[] } = this.state.order;
 

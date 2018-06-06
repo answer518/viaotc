@@ -30,7 +30,26 @@ class DealIdentifiy extends Component {
 					this.setState({identityStatus: data.auth_status, payStatus: data.pay, funds_password_status: data.funds_password})
 				}
 			})
-	}		
+	}
+
+	renderAuthStatus(){
+		const { auth_status='' } = this.props.globalState;
+		switch(String(auth_status)) {
+			case '-1':
+				return <Link to="/app/userCenter/identityAuth">认证</Link>
+			break;	
+			case '0':
+				return <span className="text">待审核</span>
+			break;	
+			case '1':
+				return <span className="success">已认证</span>
+			break;
+			case '2':
+				return <Link to="/app/userCenter/identityAuth">审核拒绝。重新认证</Link>
+			break;
+			default: return ''	
+		}
+	} 
 
 	render(){
 		const { funds_password_status, auth_status, pay_status } = this.props.globalState;
@@ -52,7 +71,7 @@ class DealIdentifiy extends Component {
 								<h2>全平台交易用户真实认证</h2>
 							</div>
 							<div className="operation">
-								<Link to="/app/userCenter/identityAuth">去认证</Link>
+								{this.renderAuthStatus()}
 							</div>
 						</div>
 					} 

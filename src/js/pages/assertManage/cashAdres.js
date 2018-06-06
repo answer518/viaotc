@@ -21,7 +21,7 @@ class CashAdres extends Component {
 			type:'',
 			loading:true,
 			coinTypeList:[],
-			selectType:'btc',
+			selectType:'eth',
 			adresList:[],
 			modalVisible:false
 		};

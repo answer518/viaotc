@@ -131,20 +131,9 @@ class MyPayment extends Component {
         ajax.get('/api/pc/pay/get_pay_infos').then((response) => {
             const { code, data } = response;
             if (code == 0){
-                const { alipay, weixin, bank_transfer } = data;
-                const payments = [];
-                if (alipay != null && alipay.length > 0) {
-                    payments.push(...alipay.map(e => {return {pay_method: 'alipay', ...e}}))
-                }
-                if (weixin != null && weixin.length > 0) {
-                    payments.push(...weixin.map(e => {return {pay_method: 'weixin', ...e}}))
-                }
-                if (bank_transfer != null && bank_transfer.length > 0) {
-                    payments.push(...bank_transfer.map(e => {return {pay_method: 'bank_transfer', ...e}}))
-                }
-                this.setState({payments});
+                this.setState({payments: data});
 
-                this.props.actions.updatePayStatus(payments.length > 0);
+                this.props.actions.updatePayStatus(data.length > 0);
             }
         })
     }
@@ -154,7 +143,15 @@ class MyPayment extends Component {
 
         return (
             payments.map((pay, i) => {
-                const { id, pay_method, pay_name, account, qrcode, bank_account, account_branch, bank_card_num} = pay;
+                const { id, pay_name, account, qrcode, bank_account, account_branch, bank_card_num} = pay;
+                let pay_method;
+                if (pay_name === '支付宝') {
+                    pay_method = 'alipay'
+                } else if (pay_name === '微信支付') {
+                    pay_method = 'weixin'
+                } else {
+                    pay_method = 'bank_transfer'
+                }
 
                 if (pay_method === 'bank_transfer') {
                     return (

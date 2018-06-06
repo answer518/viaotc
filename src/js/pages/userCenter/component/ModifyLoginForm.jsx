@@ -41,16 +41,6 @@ class ModifyLoginForm extends Component {
 		}
 	}
 
-	checkPasswordStrength(rule, value, callback){
-		const mode = passwordStrength(value);
-
-		if (mode == 0 ) {
-			callback('密码强度太低');
-		} else {
-			callback();
-		}
-	}
-
 	checkPasswordLength(rule, value, callback){
 		if (value.length < 8 || value.length > 20){
 			callback('密码长度为8-20位');
@@ -113,10 +103,9 @@ class ModifyLoginForm extends Component {
 									rules: [
 										{required: true, message: '请设置您的新密码！'},
 										this.checkPasswordNoSpace,
-										this.checkPasswordLength,
-										this.checkPasswordStrength
+										this.checkPasswordLength
 									]
-								})(<PasswordInput placeholder="请输入新密码"/>)
+								})(<PasswordInput placeholder="请输入新密码" hasRule={true} maxLength={20}/>)
 							}
 						</div>
 					</FormItem>	

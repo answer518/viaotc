@@ -43,8 +43,8 @@ class DealForm extends Component {
 	componentDidMount(){
 		const { type } = this.props;
 		const { coin_type } = this.props.fields;
-		type == 'sell' && this.getBalanceDetail(coin_type.value || 'btc');
-		this.getCoinPrice(coin_type.value || 'btc');
+		type == 'sell' && this.getBalanceDetail(coin_type.value || 'eth');
+		this.getCoinPrice(coin_type.value || 'eth');
 		this.getPaymentsInfo();
 		this.getUserInfo();
 	}
@@ -81,18 +81,7 @@ class DealForm extends Component {
 			.then((response) => {
 				const { code, data } = response;
 				if (code == 0){
-					const { alipay, weixin, bank_transfer } = data;
-	                const payments_info = [];
-	                if (alipay != null && alipay.length > 0) {
-	                    payments_info.push(...alipay.map(e => {return {pay_method: 'alipay', ...e}}))
-	                }
-	                if (weixin != null && weixin.length > 0) {
-	                    payments_info.push(...weixin.map(e => {return {pay_method: 'weixin', ...e}}))
-	                }
-	                if (bank_transfer != null && bank_transfer.length > 0) {
-	                    payments_info.push(...bank_transfer.map(e => {return {pay_method: 'bank_transfer', ...e}}))
-	                }
-	                this.setState({payments_info});
+	                this.setState({payments_info: data});
 				}
 			})
 	}
@@ -168,7 +157,7 @@ class DealForm extends Component {
 	checkPrice(rule, value, callback){
 		const { coin_price, currency } = this.state;
 		if (value > coin_price * 1.2 || value < coin_price * 0.8) {
-			callback(`必须在市场参考价(${coin_price} ${currency})的 80% 到 120% 之间`)
+			callback(`必须在市场参考价(${coin_price})的 80% 到 120% 之间`)
 		} else {
 			callback();
 		}
@@ -284,9 +273,9 @@ class DealForm extends Component {
 											return (
 												<Checkbox value={pay.pay_method + ':' + pay.id} key={i} style={{display: 'block', marginLeft: 0}}>
 												{
-													pay.pay_method === 'weixin' ?
+													pay.pay_name === '微信支付' ?
 													`微信支付 ${realname} ${pay.account}`
-													: (pay.pay_method === 'alipay' ?
+													: (pay.pay_name === '支付宝' ?
 													`支付宝 ${realname} ${pay.account}`
 													:
 													`银行转账 ${realname} ${pay.bank_account}`)

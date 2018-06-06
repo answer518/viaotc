@@ -55,16 +55,6 @@ class Register extends Component {
 		}
 	}
 
-	checkPasswordStrength(rule, value, callback){
-		const mode = passwordStrength(value);
-
-		if (mode == 0 ) {
-			callback('密码强度太低');
-		} else {
-			callback();
-		}
-	}
-
 	checkPasswordLength(rule, value, callback){
 		if (value.length < 8 || value.length > 20){
 			callback('密码长度为8-20位');
@@ -105,7 +95,7 @@ class Register extends Component {
 	      		.then((response) => {
 	      			const { error, msg='' } = response;
 	      			if (error == 0) {
-	      				browserHistory.push('/app/entrance/login');
+	      				browserHistory.push('/app');
 	      				setTimeout(() => {
 	      					window.location.reload();
 	      				}, 200);
@@ -161,7 +151,7 @@ class Register extends Component {
 								getFieldDecorator('captcha', {
 									rules: [{required: true, message: '请输入验证码！'}]
 								})(
-									<Input placeholder="请输入验证码" maxLength="4"/>
+									<Input placeholder="请输入验证码" maxLength={4}/>
 								)
 							}
 						</FormItem>
@@ -201,13 +191,13 @@ class Register extends Component {
 									rules: [
 										{required: true, message: '请设置您的密码！'},
 										this.checkPasswordNoSpace,
-										this.checkPasswordLength//,
-										// this.checkPasswordStrength
+										this.checkPasswordLength
 									]
 								})(
 									<PasswordInput 
 										placeholder="请设置您的密码"
 										hasRule={true}
+										maxLength={20}
 									/>
 								)
 							}

@@ -24,7 +24,7 @@ class DealCenterPublishBuy extends Component {
 			identityStatus: 0,			
 			fields: {
 				coin_type: {
-					value: 'btc'
+					value: 'eth'
 				},
 				currency: {
 					value: 'CNY'
