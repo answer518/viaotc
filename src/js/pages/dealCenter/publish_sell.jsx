@@ -22,7 +22,7 @@ class DealCenterPublishSell extends Component {
 			timeStamp: Date.now(),
 			error: '',		
 			visible: false,	
-			identityStatus: 0,
+			identityStatus: 1,
 			fields: {
 				coin_type: {
 					value: 'eth'
@@ -79,16 +79,7 @@ class DealCenterPublishSell extends Component {
 	}
 
 	handleBtnClick(){
-		const { funds_password_status } = this.props.globalState;
-		const { identityStatus } = this.state;
-		
-		this.setState({visible: false});
-
-		if (identityStatus != 1 || funds_password_status != 1) {
-			browserHistory.push('/app/userCenter/dealIdentifiy');
-		} else {
-			browserHistory.push('/app/userCenter/tradeInfo');
-		}
+		browserHistory.push('/app/userCenter/tradeInfo');
 	}	
 
 	getAuthInfo(){
