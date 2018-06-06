@@ -102,7 +102,7 @@ class DealForm extends Component {
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
-					this.setState({sellable: data.sellable})
+					this.setState({sellable: data.usable})
 				}
 			})
 	}

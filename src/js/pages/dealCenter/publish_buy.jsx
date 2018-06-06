@@ -158,7 +158,7 @@ class DealCenterPublishBuy extends Component {
 					onChange={this.handleFormChange}
 				/>
 				<Modal
-				 	title="广告发布成功"
+				 	title="��淢���ɹ�"
 				 	width={600}
 				 	visible={visible}
 				 	className="deal-modal"
@@ -171,17 +171,17 @@ class DealCenterPublishBuy extends Component {
 						<div className="ok tip-icon"></div>
 						{identityStatus == 1 ?
 							<div style={{marginBottom: '62px'}}>
-								<h4>您的广告已发布成功，请注意查看短信</h4>
-								<h4>产生交易订单时我们将在第一时间通知您</h4>
+								<h4>���Ĺ���ѷ����ɹ�����ע��鿴����</h4>
+								<h4>�������׶���ʱ���ǽ��ڵ�һʱ��֪ͨ��</h4>
 							</div> 
 							:<div style={{marginBottom: '62px'}}>
-								<h4>您的广告信息已添加成功，广告信息将在您完成</h4>
-								<h4>相关设置后对外展示</h4>
+								<h4>���Ĺ����Ϣ�����ӳɹ��������Ϣ���������</h4>
+								<h4>������ú����չʾ</h4>
 							</div>
 						}
 						<div style={{height: '80px', backgroundColor: '#fff'}}>	
 							<FormButton
-								text={identityStatus == 1 ? '确认' : '去设置'}
+								text={identityStatus == 1 ? 'ȷ��' : 'ȥ����'}
 								className="submit-btn-wrap"
 								isDisabled={false}
 								onSubmit={this.handleBtnClick}

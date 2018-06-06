@@ -173,7 +173,7 @@ class Header extends Component {
 		return (
 			<div className="header">
 				<div className="header-content">
-					<span className="welcome">您好，欢迎来到ViaOTC！</span>
+					<span className="welcome">您好，欢迎来到Bitdad！</span>
 					<div className="operate-block">
 						{is_logged == 1 && <div 
 							className="operate-block-item user-operate"

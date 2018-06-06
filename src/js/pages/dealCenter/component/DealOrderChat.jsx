@@ -67,7 +67,7 @@ class DealOrderChat extends Component {
 			.then((response) => {
 				const { error, data} = response;
 				if(error == 0){
-					//'wss://ws.jtcool.com/'
+					//'wss://ws.bitdad.com/'
 					this.socketIO = io(window.OTC.ws_url, { path: '/chat/socket.io', query: `token=${data.token}`});
 					this.socketIO.on(data.token, (data)=> {
 						this.toBottom = true;

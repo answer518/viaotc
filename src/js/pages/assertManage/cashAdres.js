@@ -21,7 +21,7 @@ class CashAdres extends Component {
 			type:'',
 			loading:true,
 			coinTypeList:[],
-			selectType:'eth',
+			selectType:'ETH',
 			adresList:[],
 			modalVisible:false
 		};
@@ -120,7 +120,7 @@ class CashAdres extends Component {
 		let {coinTypeList} = this.state;
 		return(
 			coinTypeList.map((item,i)=>
-				<Option value= {item} key ={item}>{item}</Option>
+				<Option value= {item} key ={item}>{item.toUpperCase()}</Option>
 			)
 		)
 	}
@@ -174,9 +174,7 @@ class CashAdres extends Component {
 							{this.renderAddressList()}
 							<div className ="adres-item">
 								<div className = "adres-body add-body" onClick={this.showModal}>
-									<div className="adres-add">
-										<img src={`${getBaseUrl()}/www/add.jpg`} alt=""/>
-									</div>
+									<div className="adres-add"></div>
 									<div className="add-tip" onClick={this.showModal}>添加{selectType.toUpperCase()}常用提币地址</div>
 								</div>
 							</div>

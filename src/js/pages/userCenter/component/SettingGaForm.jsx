@@ -82,7 +82,7 @@ class SettingGaForm extends Component {
 		const { ga_code, sms_code } = getFieldsValue();
 		const { ga_key, timeStamp, error } = this.state;
 		const { username='', phone='' } = window.OTC;
-		const qrValue = `otpauth://totp/${phone}?secret=${ga_key}&issuer=ViaOTC`;
+		const qrValue = `otpauth://totp/${phone}?secret=${ga_key}&issuer=Bitdad`;
 
 		const isDisabled = !(ga_code && sms_code);
 

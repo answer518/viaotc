@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Form, Button, Modal } from 'antd';
-import { browserHistory } from 'react-router';
+import { Input, Form, Button, Modal, Checkbox } from 'antd';
+import { browserHistory, Link } from 'react-router';
 import ajax from 'utils/request';
 import { getErrorMsg } from 'utils/util';
 import { isNaN } from 'lodash';
 
 const FormItem = Form.Item;
+const CheckboxGroup = Checkbox.Group;
+
 const options = {
 
   onFieldsChange(props, changedFields) {
@@ -51,7 +53,7 @@ class DealInfoForm extends Component {
 	}
 
 	generateReverse(type){
-		return (<div key={`${type}-reverse`} onClick={this.handleReverse} className="fl reverse-btn"></div>);
+		return (<div key={`${type}-reverse`} onClick={this.handleReverse} className="fl reverse-btn" key="3"></div>);
 	}
 
 	checkAmountRange(rule, value, callback) {
@@ -98,12 +100,12 @@ class DealInfoForm extends Component {
 				if (!err){
 					const { ad_id, type } = this.props;
 					if(!ad_id) return;
-					const { amount } = values;
-					ajax.post('/api/pc/orders/create', {amount, ad_id})
+					const { amount, pay_info } = values;
+					ajax.post('/api/pc/orders/create', {amount, ad_id, pay_info})
 						.then((response) => {
 							const { error, data, msg='' } = response;
 							if (error == 0){
-								browserHistory.push({pathname: `/app/dealCenter/deal/${type}`, query:{order_id: data.order_id}});						
+								browserHistory.push({pathname: `/app/dealCenter/deal/${type}`, query:{order_id: data.order_id}});
 							} else {
 								if(this.timer) {clearTimeout(this.timer)}
 								const errorMsg = getErrorMsg(msg);
@@ -119,13 +121,50 @@ class DealInfoForm extends Component {
 	}
 
 	renderSellForm() {
-		const { coin_type='', currency, min_amount, max_amount, form } = this.props;
+		const { coin_type='', currency, min_amount, max_amount, pay_info, realname, form } = this.props;
 		const { getFieldDecorator } = form;
 		const { reverse } = this.state;
 
 		const disabled = !!(min_amount && max_amount) && (min_amount == max_amount);
 
-		const items =  [(<div className="fl from-item inline-form-item" key="sell-number">
+		const items =  [
+			(<div className="clearfix" key="1">
+				<FormItem>
+					<div className="from-item inline-form-item">
+						<div className="label">支付方式：</div>
+						<div className="form-item-content">
+							{
+								pay_info.length < 1 ?
+								(<Link to="/app/userCenter/myPayment" className="">缺少可用的支付方式，请您添加</Link>)
+								:
+								getFieldDecorator('pay_info', {
+									rules: [{required: true, message: `请选择支付方式`}]
+								})(
+									<CheckboxGroup>
+									{
+										pay_info.map((pay, i) => {
+											return (
+												<Checkbox value={pay.id} key={i} style={{display: 'block', marginLeft: 0}}>
+												{
+													pay.pay_name === '微信支付' ?
+													`微信支付 ${realname} ${pay.account}`
+													: (pay.pay_name === '支付宝' ?
+													`支付宝 ${realname} ${pay.account}`
+													:
+													`银行转账 ${realname} ${pay.bank_account}`)
+												}
+												</Checkbox>
+											)
+										})
+									}
+								</CheckboxGroup>
+								)
+							}
+						</div>
+					</div>
+				</FormItem>
+			</div>),
+			(<div className="fl from-item inline-form-item" key="sell-number" key="2">
 					<FormItem>
 						<div className="label">出售数量</div>
 						{
@@ -145,7 +184,7 @@ class DealInfoForm extends Component {
 					</FormItem>
 				</div>), 
 			this.generateReverse('sell'), 
-			(<div className="fl from-item inline-form-item" key="sell-money">
+			(<div className="fl from-item inline-form-item" key="sell-money" key="4">
 					<FormItem>
 						<div className="label">获得金额</div>
 						{

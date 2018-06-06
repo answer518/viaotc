@@ -94,7 +94,7 @@ class DealOrderInfo extends Component {
 
 	dealReceiptOk(){
 		this.setState({receiptVisible: false});
-		message.success('您已成功确认收款，资产将放行至买家，ViaOTC祝您交易愉快。');
+		message.success('您已成功确认收款，资产将放行至买家，Bitdad祝您交易愉快。');
 	}	
 
 	//appeal

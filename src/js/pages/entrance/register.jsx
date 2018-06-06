@@ -35,11 +35,13 @@ class Register extends Component {
 	}
 
 	refreshCode(){
-		this.setState({timeStamp: Date.now()});
+		this.setState({timeStamp: Date.now(), error: ''});
 	}
 
 	checkPhone(rule, value, callback) {
-
+		if (value == '') {
+			return callback();
+		}
 		const phone = value.replace(/(^\s*)|(\s*$)/g, '');
 		if(!/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
 			return callback('请输入合法的手机号!')
@@ -117,7 +119,7 @@ class Register extends Component {
 
 		return (
 			<div className="login-page-form">
-				<h1>您好，欢迎注册ViaOTC！</h1>
+				<h1>您好，欢迎注册Bitdad！</h1>
 				<div className="form-content otc-form">
 					<div className="form-item">
 						<FormItem>
@@ -157,7 +159,7 @@ class Register extends Component {
 						</FormItem>
 						<div className="captcha-code">
 							<img 
-								src={`${window.OTC.api_url}/api/pc/captcha?${timeStamp}`}
+								src={`${window.OTC.api_url || ''}/api/pc/captcha?${timeStamp}`}
 								onClick={this.refreshCode}
 							/>						
 						</div>

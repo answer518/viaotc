@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Select, Button } from 'antd';
+import { Form, Input, Select, Button, message } from 'antd';
 import FormUploadItem from 'pages/component/FormUploadItem.jsx';
 import FormButton from 'pages/component/FormButton';
+import PasswordInput from 'pages/component/PasswordInput';
 const FormItem = Form.Item;
 const Option = Select.Option;
 import MD5 from 'md5';
@@ -77,9 +78,9 @@ class AddPaymentForm extends Component {
             if (!err) {
                 ajax.post('/api/pc/pay/add_pay', param).then(
                     d => {
-                        if(d.error){
-                            const errorMsg = getErrorMsg(msg);
-                            message.warn(errorMsg);
+                        if(d.error != 0){
+                            const errorMsg = getErrorMsg(d.msg);
+                            message.error(errorMsg);
                         }else{
                             this.props.onSuccess && this.props.onSuccess()
                         }
@@ -232,11 +233,11 @@ class AddPaymentForm extends Component {
                 }
                 <FormItem className="form-item">
                     <label>资金密码：</label>
-                    <div className="form-item-content inset-content">
+                    <div className="form-item-content inset-content fl">
                         {
                             getFieldDecorator('funds_password', {
                                 rules: [{required: true, message: '请输入资金密码！'}]
-                            })(<Input type="password" placeholder="请输入资金密码" maxLength={6} hasRule={false}/>)
+                            })(<PasswordInput placeholder="请输入资金密码" maxLength="6" hasRule={false}/>)
                         }
                     </div>
                 </FormItem>

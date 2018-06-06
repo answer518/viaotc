@@ -13,7 +13,7 @@ class ViaOtcFee extends PureComponent {
 		return (
 			<div className="protocol">
 				<div className="protocol-head">
-					<h1>ViaOTC费率说明</h1>
+					<h1>Bitdad费率说明</h1>
 				</div>
 				<div className="protocol-body">
 					<table>

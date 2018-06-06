@@ -28,10 +28,14 @@ class DealInfoDetailBlock extends Component {
 				sum: {
 					value: ''
 				}
-			}
+			},
+			realname: '',
+			pay_info: []
 		};
 		this.getCoinPrice = this.getCoinPrice.bind(this);
 		this.getBalanceDetail = this.getBalanceDetail.bind(this);
+		this.getPayInfo = this.getPayInfo.bind(this);
+		this.getUserInfo = this.getUserInfo.bind(this);
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.timer = null;
 	};
@@ -53,6 +57,8 @@ class DealInfoDetailBlock extends Component {
 		if (is_fixed_price || !info.coin_type) return;
 		this.getCoinPrice(info.coin_type, info);
 		this.getBalanceDetail(info.coin_type);
+		this.getPayInfo();
+		this.getUserInfo();
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -70,6 +76,7 @@ class DealInfoDetailBlock extends Component {
 			});
 			this.getCoinPrice(nextProps.info.coin_type, nextProps.info);
 			this.getBalanceDetail(nextProps.info.coin_type);
+			this.getPayInfo();
 		}
 	}
 
@@ -122,7 +129,7 @@ class DealInfoDetailBlock extends Component {
 			.then((response) => {
 				const { error, data } = response;
 				if (isEmpty(data)) return;
-				this.setState({sellable: data.sellable})
+				this.setState({sellable: data.usable})
 			})
 	}
 
@@ -158,6 +165,26 @@ class DealInfoDetailBlock extends Component {
 				}
 			});
 	}
+
+	getPayInfo(){
+        ajax.get('/api/pc/pay/get_pay_infos').then((response) => {
+            const { code, data } = response;
+            if (code == 0){
+                this.setState({pay_info: data})
+            }
+        })
+    }
+
+    getUserInfo(){
+        ajax.get('/api/pc/user/info').then((response) => {
+            const { error, data } = response;
+            if (error == 0){
+                const { realname } = data.userinfo;
+                this.setState({realname});
+            }
+        })
+        
+    }
 
 	toLogin(){
 		browserHistory.push('/app/entrance/login');
@@ -201,11 +228,15 @@ class DealInfoDetailBlock extends Component {
 
 	render(){
 		const { type, info, ad_id, globalState } = this.props;
-		const { coin_price, fields, sellable } = this.state;
+		const { coin_price, fields, sellable, pay_info, realname } = this.state;
 		const { funds_password_status, auth_status } = globalState;
 		const { coin_type='', price='', currency='', pay_method=[], min_amount='', max_amount='', expect_period='', is_fixed_price, user_id='' } = info;
 		const finalPrice = is_fixed_price == 0 ? coin_price : price;
 		const coinType = coin_type.toUpperCase();
+
+		const usablePayInfo = pay_info.filter(item => {
+        	return pay_method.indexOf(item.pay_name) > -1
+        })
 
 		const { is_logged } = this.context;
 
@@ -223,11 +254,13 @@ class DealInfoDetailBlock extends Component {
 				 			<div className="deal-info-detal-item">
 				 				<label>{`${is_fixed_price == 0 ? '浮动' : '固定'}价格`}：</label>
 				 				<div className="inline-middle">{`${finalPrice} ${currency}`}</div>
-				 			</div> 
+				 			</div>
+				 			{ type == 'buy' &&
 				 			<div className="deal-info-detal-item">
 				 				<label>付款方式：</label> 
 				 				{this.renderPayInfo()}
 				 			</div>
+				 			}
 				 			<div className="deal-info-detal-item">
 				 				<label>交易限额：</label>
 				 				<div className="inline-middle">{`${min_amount}-${max_amount} ${coinType}`}</div>
@@ -245,6 +278,8 @@ class DealInfoDetailBlock extends Component {
 					 			currency={currency}
 					 			fields={fields}
 					 			sellable={sellable} 
+					 			pay_info={usablePayInfo}
+					 			realname={realname}
 					 			ad_id={ad_id}
 					 			onChange={this.handleFormChange}
 					 			min_amount={min_amount}
@@ -266,10 +301,10 @@ class DealInfoDetailBlock extends Component {
 			 					坚守契约精神：交易双方出售/购买以约定价格确认交易后，平台将保护双方的合法权益，不会随币价在交易确认后的变化作为申述依据。举例：出售数字资产方在购买者按设置价格付款后，币价在购买者确认交易后发生上涨，出售者以此作为不予放行的依据，平台将不予支持。
 			 				</div>	
 			 				<div className="deal-info-detal-tips-item">
-			 					在您发起交易后，数字货币被冻结，受到ViaOTC的保护。如果您是买家，发起交易请求后，您应在要求的时间内付款并把交易标记为付款已完成。卖家在收到付款后将会放行处于托管中的数字货币。
+			 					在您发起交易后，数字货币被冻结，受到Bitdad的保护。如果您是买家，发起交易请求后，您应在要求的时间内付款并把交易标记为付款已完成。卖家在收到付款后将会放行处于托管中的数字货币。
 			 				</div>	
 			 				<div className="deal-info-detal-tips-item">					
-								交易前请阅读《ViaOTC网络服务条款》以及常见问题、交易指南等帮助文档。
+								交易前请阅读《Bitdad网络服务条款》以及常见问题、交易指南等帮助文档。
 			 				</div>		
 			 				<div className="deal-info-detal-tips-item">
 			 					申述保护网上交易的买卖双方。在发生争议的情况下，我们将平复所提供的的所有信息，并将托管的数字货币放行给其合法所有者

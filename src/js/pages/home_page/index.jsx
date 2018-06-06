@@ -10,6 +10,7 @@ import * as globalAction from 'src/js/actions';
 import { bindActionCreators } from 'redux';
 import { Link, browserHistory } from 'react-router';
 import { getBaseUrl } from 'utils/util';
+import kefuImg from '../../../img/kefu.jpg';
 
 const baseUrl = getBaseUrl();
 
@@ -57,7 +58,7 @@ class HomePage extends Component {
 					</div>
 				</div>	
 				<Alert 
-					messages={[{content: "【ViaOTC】人民币交易   注册有礼"}]}
+					messages={[{content: "【Bitdad】人民币交易   注册有礼"}]}
 					showIcon
 				/>
 				<div className="coin-list-container">	
@@ -65,7 +66,7 @@ class HomePage extends Component {
 					<div className="suspend-operate chat">
 						<div className="service-qrcode">
 							<p>客服微信</p>
-							<img src={`${baseUrl}/www/kefu.jpg`} />
+							<img src={kefuImg} />
 						</div>
 					</div>					
 				</div>	

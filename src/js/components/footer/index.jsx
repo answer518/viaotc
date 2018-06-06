@@ -33,7 +33,7 @@ class Footer extends PureComponent {
 						</ul>
 					</div>
 					<div className="copyright">
-						Copyright © 2017 ViaOTC Inc. 保留所有权利
+						Copyright © 2017 Bitdad Inc. 保留所有权利
 					</div>					
 				</div>
 			</div>
