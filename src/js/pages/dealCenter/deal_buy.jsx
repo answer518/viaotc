@@ -81,14 +81,17 @@ class DealBuy extends Component {
 				/>
 				<div className="detail-info-body clearfix">
 					<DealOrderChat
+						type="buy"
 						className="fl"
 						order_id={order_id}
 						parterAvatar={getAvatar(info.avatar)}
 						avatar={avatar}
 						username={info.username}
 						onStatusChange={this.handleStatusChange}
+						chatStatus={chatStatus}
 					/>
 					<DealOrderInfo
+						type="buy"
 						className="fr"
 						order_id={order_id}
 						ga_status={ga_status}

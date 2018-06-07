@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import io from 'socket.io-client';
-import { getAvatar } from 'utils/util';
+import { getAvatar, chatStatusMap } from 'utils/util';
 import ajax from 'utils/request';  
 import { browserHistory } from 'react-router';
 
@@ -210,7 +210,7 @@ class DealOrderChat extends Component {
 	}
 
 	render(){
-		const { className, username } = this.props;
+		const { className, username, chatStatus } = this.props;
 		const { message } = this.state;
 		const cls = classNames({
 			'deal-order-chat': true,
@@ -235,6 +235,8 @@ class DealOrderChat extends Component {
 						</div>
 					</div>
 				</div>
+				{(chatStatus == 0 || chatStatus == 2)
+				?
 				<div className="deal-order-chat-foot">
 					<div className="chat-input-wrap">
 						<textarea 
@@ -254,6 +256,11 @@ class DealOrderChat extends Component {
 						<div className="common-bg send"></div>
 					</div>
 				</div>
+				:
+				<div className="deal-order-chat-foot">
+					<div className="chat-input-disabled">{chatStatusMap[chatStatus]}</div>
+				</div>
+				}
 			</div>
 		)
 		

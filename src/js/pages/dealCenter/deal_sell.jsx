@@ -80,12 +80,14 @@ class DealSell extends Component {
 				/>
 				<div className="detail-info-body clearfix">
 					<DealOrderChat
+						type="sell"
 						className="fl"
 						order_id={order_id}
 						parterAvatar={getAvatar(info.avatar)}
 						avatar={avatar}
 						username={info.username}
 						onStatusChange={this.handleStatusChange}
+						chatStatus={chatStatus}
 					/>
 					<DealOrderInfo
 						className="fr"

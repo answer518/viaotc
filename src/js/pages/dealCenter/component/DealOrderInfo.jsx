@@ -243,7 +243,7 @@ class DealOrderInfo extends Component {
 						</div>
 						<div className="order-info-item">
 							<label>交易状态：</label>
-							<span style={{fontSize: '14px', color: '#002aff'}}>{dealStatus[chatStatus]}</span>
+							<span style={{fontSize: '14px', color: '#002aff'}}>{dealStatus[chatStatus][type]}</span>
 						</div>																				
 					</div>
 					{
