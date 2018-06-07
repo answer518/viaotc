@@ -115,7 +115,7 @@ if (env === 'start' || env === 'dev') {
 			proxy: {
 				//"/api": "http://cn-api.jtcool.com", 
 				  "/api": {
-				  	target: "http://cn-api.jtcool.com",
+				  	target: "http://api.bitdad.com",
 				  	changeOrigin: true
 				  }
 			},
@@ -123,54 +123,6 @@ if (env === 'start' || env === 'dev') {
 		}
 	})
 }
-
-// //production
-// if (env === 'dist') {
-// 	module.exports = merge(base, {
-// 		output: {
-// 			path: path.resolve(__dirname, 'dist'),
-// 			publicPath: '/dist/',
-// 			filename: '[name].[hash:8].js',
-// 			chunkFilename: '[name].[chunkhash:8].chunk.js'
-// 		},
-// 		plugins: [
-// 			new CleanWebpackPlugin(['./dist']),
-// 			new webpack.DefinePlugin({
-// 				'process.env': {
-// 					NODE_ENV: JSON.stringify('production')
-// 				}
-// 			}),
-// 			new webpack.IgnorePlugin(/^\.\/locale$/,/moment/),
-// 			new webpack.optimize.CommonsChunkPlugin({
-// 				name: 'vendor',
-// 				filename: 'vendor.[hash].js',
-// 				minChunks(module){
-// 					if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)){
-// 						return false
-// 					}
-// 					return module.context && module.context.indexOf('node_modules') >= 0;
-// 				}
-// 			}),
-// 			//				notice: '"<?=$notice[\'title\']; ?>"',
-// 			new HtmlWebpackPlugin({
-// 				title: 'OTC',
-// 				filename: path.resolve(__dirname, './dist/index.html'),
-// 				template: path.resolve(__dirname, './template/app.html')
-// 			}),
-// 			new webpack.optimize.UglifyJsPlugin({
-// 				beautify: false,
-// 				comments: false,
-// 				sourceMap: false,
-// 				mangle: false,
-// 				compress: {
-// 					warnings: false,
-// 					collapse_vars: true,
-// 					reduce_vars: true
-// 				}
-// 			})
-// 		]
-// 	})
-// }
 
 //production
 if (env === 'build_dev') {
