@@ -16,7 +16,7 @@ class DealCenterPublish extends Component {
 
 		const { funds_password_status, auth_status, pay_status } = this.props.globalState;
 		this.state = {
-			redirect : auth_status != 1 || funds_password_status != 1 || pay_status !== true
+			redirect : false
 		}
 	}
 

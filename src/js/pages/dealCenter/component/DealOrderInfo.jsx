@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button, Modal, message } from 'antd';
+import { Button, Modal, message, Popover } from 'antd';
 import FundPasswordForm from './FundPasswordForm';
 import AppealForm from 'pages/component/AppealForm';
 import UnfreezeForm from 'pages/component/UnfreezeForm';
@@ -144,11 +144,12 @@ class DealOrderInfo extends Component {
 
 	renderPayInfo () {
 		const { pay_method = [], pay_info = null } = this.state.order;
-
-		if (pay_info == null) {
-			return (
-				<div className="inline-middle">{pay_method.join('/')}</div>
-			)
+		console.log(pay_method, pay_info)
+		if (pay_info == null || pay_info.length < 1) {
+			return (<div className="order-info-item">
+					<label>交易方式：</label>
+					<span>{pay_method.join('，')}</span>
+				</div>)
 		} else {
 			return (
 				<div className="pay-info-block">
@@ -178,20 +179,73 @@ class DealOrderInfo extends Component {
 		}
 	}
 
-	renderPayments () {
-        const { pay_info=[], pay_method=[] } = this.state.order;
+	renderOperate (type) {
+		const { chatStatus } = this.props;
+		const { expect_period='', coin_type='' } = this.state.order;
 
-        return (<div className="order-info-item">
-					<label>交易方式：</label>
-					<span>{pay_method.join('，')}</span>
-				</div>)
-    }
+		const expectPeriod = isNil(expect_period) ? '-' : `${expect_period}分钟`;
+
+		if (chatStatus == 0) {
+			if (type == 'buy') {
+				return (
+					<div className="order-operate">
+					<div className="btns-wrap">
+						<Button 
+							type="primary" 
+							style={{marginRight: '18px'}}
+							onClick={this.showPayDeal}
+						>确认已付款</Button>		
+						<Button 
+							onClick={this.showCancelDeal} 
+						>取消交易</Button>																							
+					</div>
+					<div className="order-opreate-tip">
+						<p>请在<span style={{color: '#3665ff'}}>{expectPeriod}</span>内完成付款，并点击“确认已付款”，平台讲告知卖家放行{coin_type.toUpperCase()}，不要填写付款参考码以外的其他信息。</p>
+					</div>
+					</div>
+				)
+			}
+		} else if (chatStatus == 2) {
+			if (type == 'sell') {
+				return (
+					<div className="order-operate">
+					<div className="btns-wrap">
+						<Button 
+							type="primary" 
+							style={{marginRight: '18px'}}
+							onClick={this.showReceiptDeal}
+						>确认已收款</Button>
+						<Button 
+							onClick={this.showAppeal}
+						>申诉</Button>
+					</div>
+					<div className="order-opreate-tip">
+						<p>请您在确认收款后，点击“确认已收款”，平台将在您确认收款后放行{coin_type.toUpperCase()}。</p>
+					</div>
+					</div>
+				)
+			} else {
+				return (
+					<div className="order-operate">
+					<div className="btns-wrap btns-sell-wrap">
+						<Button 
+							onClick={this.showAppeal}
+						>申诉</Button>
+					</div>
+					</div>
+				)
+			}
+		}
+	}
 
 	render(){
 		const { className, type, order_id, funds_password_status, chatStatus } = this.props;
 		const { cancelVisible, payVisible, receiptVisible, appealVisible, expect_period_time } = this.state;
 		const { order_num='', coin_type='', coin_price='', currency='', pay_info=[], pay_method=[], expect_period='', 
-		amount=0, remaining_time='', currency_amount=0, status='' } = this.state.order;
+		amount=0, remaining_time='', currency_amount=0, status='', trade_code='', order_user_id=0 } = this.state.order;
+		const { id } = window.OTC;
+		const _type = order_user_id == id ? (type == 'sell' ? 'buy' : 'sell') : type;
+		console.log(type, order_user_id, id, _type)
 
 		const color = expect_period_time == 0 ? '#333' : '#1d9e53';
 	
@@ -200,30 +254,10 @@ class DealOrderInfo extends Component {
 			[className]: className
 		});
 
-		const btnsCls = classNames({
-			'btns-wrap': true,
-			'btns-sell-wrap': type == 'sell'
-		});
-
-		const expectPeriod = isNil(expect_period) ? '-' : `${expect_period}分钟`;
-		const receiptBtnCls = classNames({
-			'receipt-btn': true,
-			'disabled': chatStatus != 2
-		});
-
-		const payBtnCls = classNames({
-			'disabled': chatStatus != 0
-		});
-
-		const cancelBtnCls = classNames({
-			'disabled': chatStatus != 0
-		});
-
 		return (
 			<div className={cls}>
 				<div className="deal-order-info-head">
 					<span>订单编号：{order_num}</span>
-					{(chatStatus == 0 || chatStatus == 2) && <span style={{color: '#195cf4', float: 'right', cursor: 'pointer'}} onClick={this.showAppeal}>申诉</span>}
 				</div>
 				<div className="deal-order-info-body">
 					<div className="order-info">
@@ -249,45 +283,14 @@ class DealOrderInfo extends Component {
 					{
 					(chatStatus === 0 || chatStatus === 2) &&
 					<div className="order-payment">
-						{this.renderPayments()}
+						{this.renderPayInfo()}
+						<div className="order-info-item">
+							<label>付款参考码：</label>
+							<span>{trade_code}</span>
+						</div>
 					</div>
 					}
-					<div className="order-operate">
-						{
-							type == 'sell' ? 
-							<div className={btnsCls}>
-									<Button 
-										type="primary" 
-										style={{marginRight: '18px'}}
-										className={receiptBtnCls}
-										onClick={this.showReceiptDeal} 
-										disabled={chatStatus != 2}
-									>
-										确认已收款
-									</Button> 											
-							</div> : 
-							<div className={btnsCls}>
-									<Button 
-										type="primary" 
-										style={{marginRight: '18px'}}
-										className={payBtnCls}
-										onClick={this.showPayDeal}
-										disabled={chatStatus != 0}
-									>
-										确认已付款
-									</Button>		
-									<Button 
-										onClick={this.showCancelDeal} 
-										disabled={chatStatus != 0}
-										className={cancelBtnCls}
-									>取消交易</Button>																							
-							</div>
-						}
-						{type == 'sell' && <div className="order-opreate-tip">
-							<p>请在买家付款完成后，点击<span style={{color: '#3665ff'}}>“付款完成”</span></p>
-							<p>平台在您确认付款后，通知卖家放行{coin_type.toUpperCase()}</p>
-						</div>}					
-					</div>
+					{ this.renderOperate(type) }
 				</div>
 				<Modal 
 					title="确认取消"

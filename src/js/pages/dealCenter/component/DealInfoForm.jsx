@@ -89,7 +89,7 @@ class DealInfoForm extends Component {
 		const { funds_password_status, auth_status, type } = this.props;
 		e.preventDefault();
 		
-		if (auth_status != 1 || funds_password_status != 1) {
+		if (false) {
 
 			browserHistory.push({
 				pathname : '/app/userCenter/dealIdentifiy',
@@ -101,7 +101,11 @@ class DealInfoForm extends Component {
 					const { ad_id, type } = this.props;
 					if(!ad_id) return;
 					const { amount, pay_info } = values;
-					ajax.post('/api/pc/orders/create', {amount, ad_id, pay_info: pay_info.join(',')})
+					let param = {amount, ad_id}
+					if (type == 'sell') {
+						param.pay_info = pay_info.join(',');
+					}
+					ajax.post('/api/pc/orders/create', param)
 						.then((response) => {
 							const { error, data, msg='' } = response;
 							if (error == 0){

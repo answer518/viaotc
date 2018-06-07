@@ -34,9 +34,9 @@ class PasswordRule extends Component {
 	renderStrength(mode){
 		if (mode == 0 ) {
 			return '低';
-		} else if (mode >= 1 && mode <= 2){
+		} else if (mode >= 1 && mode < 2){
 			return '中';
-		} else if (mode > 2){
+		} else {
 			return '高';
 		}
 	}
@@ -44,9 +44,9 @@ class PasswordRule extends Component {
 	getMyMode(mode) {
 		if (mode == 0 ) {
 			return 1;
-		} else if (mode >= 1 && mode <= 2){
+		} else if (mode >= 1 && mode < 2){
 			return 2;
-		} else if (mode > 2){
+		} else {
 			return 3;
 		}		
 	}

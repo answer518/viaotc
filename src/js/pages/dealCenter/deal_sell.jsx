@@ -90,6 +90,7 @@ class DealSell extends Component {
 						chatStatus={chatStatus}
 					/>
 					<DealOrderInfo
+						type="sell"
 						className="fr"
 						type="sell"
 						order_id={order_id}

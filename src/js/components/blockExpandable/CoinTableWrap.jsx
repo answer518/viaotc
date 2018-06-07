@@ -51,7 +51,7 @@ class CoinTableWrap extends Component {
 	getCoinAd(url, coin_type, ad_type){
 		const { interval } = this.props;
 		this.clearTimer();
-		ajax.get(url, {coin_type, ad_type, page: 1, page_size: 3}, interval/1000) 
+		ajax.get(url, {coin_type, deal_type: ad_type, page: 1, page_size: 3}, interval/1000) 
 			.then((response) => {
 				const { error, data } = response; 
 				if (error == 0){

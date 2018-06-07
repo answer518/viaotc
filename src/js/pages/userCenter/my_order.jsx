@@ -195,7 +195,14 @@ class MyOrder extends Component {
 				this.setState({loading: false});
 				if (error == 0){
 					const { orders, page_size, total } = data;
-					this.setState({orders, page_size, total});
+					const _orders = orders.map(order => {
+						const { ad_type, order_user_id } = order;
+						if (order_user_id === window.OTC.id) {
+							order.ad_type = ad_type == 'sell' ? 'buy' : 'sell';
+						}
+						return order
+					})
+					this.setState({orders: _orders, page_size, total});
 				}
 			})		
 	}
