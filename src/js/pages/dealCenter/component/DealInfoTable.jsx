@@ -35,15 +35,15 @@ class DealInfoTable extends Component {
 	}
 
 	componentDidMount(){
-		const { user_id, ad_type, coin_type } = this.props;
+		const { user_id, deal_type, coin_type } = this.props;
 		if (!user_id) return;
-		this.getOtherAdsInfo({user_id, ad_type, coin_type}); 
+		this.getOtherAdsInfo({user_id, deal_type, coin_type}); 
 	}
 
 	componentWillReceiveProps(nextProps){
 		if(!isEqual(this.props != nextProps)){
-			const { user_id, ad_type, coin_type } = nextProps;
-			this.getOtherAdsInfo({user_id, ad_type, coin_type});
+			const { user_id, deal_type, coin_type } = nextProps;
+			this.getOtherAdsInfo({user_id, deal_type, coin_type});
 		} 
 	}
 

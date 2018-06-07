@@ -68,7 +68,7 @@ class DealCenterDetailSell extends Component {
 						ad_id={ad_id}
 					/>
 					<DealInfoTable 
-						ad_type={info.ad_type}
+						deal_type={info.ad_type}
 						coin_type={info.coin_type}
 						user_id={info.user_id}
 						isSelf={window.OTC.id == info.user_id}
