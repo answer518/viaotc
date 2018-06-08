@@ -105,7 +105,7 @@ class ModifyLoginForm extends Component {
 										this.checkPasswordNoSpace,
 										this.checkPasswordLength
 									]
-								})(<PasswordInput placeholder="请输入新密码" hasRule={true} maxLength={20}/>)
+								})(<PasswordInput placeholder="请输入新密码" hasRule={true} maxLength="20" />)
 							}
 						</div>
 					</FormItem>	

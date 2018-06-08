@@ -68,18 +68,18 @@ class PasswordRule extends Component {
 	render(){
 		const { mode } = this.state;
 		const lenCls = classNames({
-			'check-pass': mode > 0
+			'check-pass': false
 		});
 
 		const strLen = classNames({
-			'check-pass': mode > 2
+			'check-pass': false
 		})
 
 		return (
 			<div className="password-rule">
 				<div className="title">密码规则</div>
 				<div style={{marginBottom: '5px'}} className={lenCls}>长度为8-20位</div>
-				<div style={{marginBottom: '8px'}} className={strLen}>包含字母、数字、特殊符号任意二项</div>
+				<div style={{marginBottom: '8px'}} className={strLen}>可使用大小写字母、数字、特殊符号</div>
 				<div>密码强度：{this.renderStrength(mode)}</div>
 				<div className="bars">
 					{this.renderBars()}

@@ -1,15 +1,41 @@
 import React, { PureComponent } from 'react';
+import ajax from 'utils/request';
 
 class ViaOtcFee extends PureComponent {
 
 	static displayName = 'ViaOtcFee';
 
 	constructor(props){
-		super(props)
+		super(props);
+		this.state = {
+			fees: []
+		};
+		this.getFees = this.getFees.bind(this)
 	};
 
-	render(){
+	componentDidMount(){
+		this.getFees(); 
+	}
 
+	getFees () {
+		ajax.get('/api/pc/withdraw_fee/get_fees')
+			.then((response) =>{
+				const { error, data } = response;
+				if (error == 0) {
+					const fees = [];
+					for (var k in data) {
+						fees.push({
+							coin_type: k.toUpperCase(),
+							recommend: data[k].recommend
+						})
+					}
+					this.setState({fees}); 
+				}
+			})
+	}
+
+	render(){
+		const { fees } = this.state;
 		return (
 			<div className="protocol">
 				<div className="protocol-head">
@@ -27,48 +53,19 @@ class ViaOtcFee extends PureComponent {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>BTC</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0.001BTC</td>								
-							</tr>
-							<tr>
-								<td>BCC</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0.0001BCC</td>								
-							</tr>
-							<tr>
-								<td>ETH</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0.01ETH</td>								
-							</tr>
-							<tr>
-								<td>ETC</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0.01ETC</td>								
-							</tr>
-							<tr>
-								<td>LTC</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0.001LTC</td>								
-							</tr>
-							<tr>
-								<td>DASH</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0.002DASH</td>								
-							</tr>																																			
+							{
+								fees.map((fee, i) => {
+									return (
+										<tr key={i}>
+											<td>{fee.coin_type}</td>
+											<td>0</td>
+											<td>0</td>
+											<td>0</td>
+											<td>{fee.recommend} {fee.coin_type}</td>								
+										</tr>
+									)
+								})
+							}		
 						</tbody>
 					</table>
 				</div>

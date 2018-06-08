@@ -43,7 +43,7 @@ class Register extends Component {
 			return callback();
 		}
 		const phone = value.replace(/(^\s*)|(\s*$)/g, '');
-		if(!/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
+		if(!/^1[3-9]\d{9}$/.test(phone)) {
 			return callback('请输入合法的手机号!')
 		}
 		callback();
@@ -153,7 +153,7 @@ class Register extends Component {
 								getFieldDecorator('captcha', {
 									rules: [{required: true, message: '请输入验证码！'}]
 								})(
-									<Input placeholder="请输入验证码" maxLength={4}/>
+									<Input placeholder="请输入验证码" maxLength="4" />
 								)
 							}
 						</FormItem>
@@ -199,7 +199,7 @@ class Register extends Component {
 									<PasswordInput 
 										placeholder="请设置您的密码"
 										hasRule={true}
-										maxLength={20}
+										maxLength="20"
 									/>
 								)
 							}

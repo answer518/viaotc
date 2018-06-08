@@ -147,7 +147,7 @@ class CashOutForm extends Component {
 										this.checkCoinNumber
 									]
 								})(
-										<Input placeholder="请输入提币数量"/>
+										<Input placeholder="请输入提币数量" maxLength="8"/>
 								)								
 							}
 							<span className="coin-type">{coin_type}</span>
@@ -158,8 +158,8 @@ class CashOutForm extends Component {
 										<span className="colored">{minimal_amount}{coin_type}</span>
 									</div>
 									<div className="fr">
-										<span>最大提币量：</span>
-										<span className="colored">{usable <= 0 ? 0 : usable}{coin_type}</span>
+										<span>可提币数量：</span>
+										<span className="colored">{usable <= 0 ? 0 : usable.toFixed(6)}{coin_type}</span>
 									</div>
 								</div>
 							</div>							
@@ -209,7 +209,7 @@ class CashOutForm extends Component {
 						{
 							getFieldDecorator('funds_password', {
 								rules: [{required: true, message: '请填写资金密码！'}]
-							})(<PasswordInput placeholder="请输入资金密码" maxLength={6} hasRule={false}/>)
+							})(<PasswordInput placeholder="请输入资金密码" maxLength="6" hasRule={false}/>)
 						}
 					</div>
 				</FormItem>

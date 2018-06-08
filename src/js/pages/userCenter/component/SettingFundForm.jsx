@@ -111,7 +111,7 @@ class SettingFundForm extends Component {
 										{required: true, message: '请输入资金密码'},
 										this.checkPassword									
 									]
-								})(<PasswordInput placeholder="请输入资金密码" maxLength={6} hasRule={false}/>)
+								})(<PasswordInput placeholder="请输入资金密码" maxLength="6" hasRule={false}/>)
 							}
 						</div>
 					</FormItem>

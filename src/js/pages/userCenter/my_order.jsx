@@ -87,7 +87,10 @@ class MyOrder extends Component {
 					value={coin_type}
 			/>,
 			dataIndex: 'coin_type',
-			key: 'coin_type'
+			key: 'coin_type',
+			render: (text) => {
+				return text.toUpperCase()
+			}
 		},{
 			title: '类型',
 			dataIndex: 'ad_type',

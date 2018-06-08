@@ -144,7 +144,6 @@ class DealOrderInfo extends Component {
 
 	renderPayInfo () {
 		const { pay_method = [], pay_info = null } = this.state.order;
-		console.log(pay_method, pay_info)
 		if (pay_info == null || pay_info.length < 1) {
 			return (<div className="order-info-item">
 					<label>交易方式：</label>
@@ -245,7 +244,6 @@ class DealOrderInfo extends Component {
 		amount=0, remaining_time='', currency_amount=0, status='', trade_code='', order_user_id=0 } = this.state.order;
 		const { id } = window.OTC;
 		const _type = order_user_id == id ? (type == 'sell' ? 'buy' : 'sell') : type;
-		console.log(type, order_user_id, id, _type)
 
 		const color = expect_period_time == 0 ? '#333' : '#1d9e53';
 	

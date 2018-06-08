@@ -74,7 +74,7 @@ class Step1 extends Component {
 								getFieldDecorator('phone', {
 									rules: [
 										{required: true, message: '请填写手机号！'},
-										{pattern: /^1(3|4|5|7|8)\d{9}$/, message: '请输入合法的手机号!'}
+										{pattern: /^1[3-9]\d{9}$/, message: '请输入合法的手机号!'}
 									]
 								})(
 									<Input placeholder="请填写手机号"/>
@@ -94,7 +94,7 @@ class Step1 extends Component {
 						</FormItem>
 						<div className="captcha-code">
 							<img 
-								src={`${window.OTC.api_url}/api/pc/captcha?${timeStamp}`}
+								src={`${window.OTC.api_url || ''}/api/pc/captcha?${timeStamp}`}
 								onClick={this.refreshCode}
 							/>						
 						</div>

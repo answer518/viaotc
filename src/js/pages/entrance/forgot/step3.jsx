@@ -5,6 +5,7 @@ import { Form, Input, Button } from 'antd';
 import StepStatus from '../component/StepStatus'; 
 import ajax from 'utils/request';
 import MD5 from 'md5';
+import PasswordInput from 'pages/component/PasswordInput';
 import FormButton from 'pages/component/FormButton';
 import { getErrorMsg, passwordStrength } from 'utils/util';
 
@@ -110,12 +111,11 @@ class Step3 extends Component {
 								getFieldDecorator('password', {
 									validateFirst: true,								
 									rules: [
-										{required: true, message: '请输入资金密码'},
-										this.checkPasswordLength,
-										this.checkPasswordStrength										
+										{required: true, message: '请输入新密码！'},
+										this.checkPasswordLength								
 									]
 								})(
-									<Input type="password" placeholder="请填写新密码" hasRule={true} name="funds_password"/>
+									<PasswordInput placeholder="请输入新密码" hasRule={true} maxLength="20" name="password"/>
 								)
 							}
 						</FormItem>							
@@ -126,11 +126,11 @@ class Step3 extends Component {
 								getFieldDecorator('repeatPassword', {
 									validateFirst: true,
 									rules: [
-										{required: true, message: '请填写新密码！'},
+										{required: true, message: '请再次输入新密码！'},
 										this.checkPasswordRight
 									]
 								})(
-									<Input type="password" placeholder="请填写新密码" name="funds_password"/>
+									<PasswordInput placeholder="请再次输入新密码" hasRule={false} maxLength="20" name="repeatPassword"/>
 								)
 							}
 						</FormItem>
