@@ -43,7 +43,7 @@ class Register extends Component {
 			return callback();
 		}
 		const phone = value.replace(/(^\s*)|(\s*$)/g, '');
-		if(!/^1[3-9]\d{9}$/.test(phone)) {
+		if(!/^1[3-9]\d{9}$/.test(phone) && !/^1[3-9]\d \d{4} \d{4}$/.test(phone)) {
 			return callback('请输入合法的手机号!')
 		}
 		callback();
@@ -82,10 +82,11 @@ class Register extends Component {
 	    e.preventDefault();
 	    this.props.form.validateFields((err, values) => {
 	      if (!err) {
-	      	const { password, agree, ...other } = values;
+	      	const { phone, password, agree, ...other } = values;
 	      	if (!agree) return;
 	      	const { sms_id } = this.state;
 	      	const param = {
+	      		phone: phone.replace(/ /g, ''), 
 	      		sms_action: 0,
 	      		area_code: '0086',
 	      		sms_id,
@@ -177,7 +178,7 @@ class Register extends Component {
 									<SmsInput 
 										sms_action={0}
 										hasGet={phone && captcha}
-										param={{phone, area_code: '0086', captcha}}
+										param={{phone: (phone == null ? phone : phone.replace(/ /g, '')), area_code: '0086', captcha}}
 										placeholder="请输入手机验证码" 
 										onSmsIdChange={this.handleSmsIdChange}
 									/>

@@ -255,7 +255,7 @@ class DealInfoDetailBlock extends Component {
 				 				<label>{`${is_fixed_price == 0 ? '浮动' : '固定'}价格`}：</label>
 				 				<div className="inline-middle">{`${finalPrice} ${currency}`}</div>
 				 			</div>
-				 			{ type == 'buy' &&
+				 			{ (type == 'buy' || (type == 'sell' && window.OTC.id == user_id)) &&
 				 			<div className="deal-info-detal-item">
 				 				<label>付款方式：</label> 
 				 				{this.renderPayInfo()}

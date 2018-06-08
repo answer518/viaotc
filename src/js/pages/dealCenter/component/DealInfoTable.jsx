@@ -7,7 +7,10 @@ import { isEqual } from 'lodash';
 const columns = [{
 	title: '币种',
 	dataIndex: 'coin_type',
-	key: 'coin_type'
+	key: 'coin_type',
+	render: (text, record) => {
+		return text.toUpperCase()
+	}
 },{
 	title: '价格',
 	dataIndex: 'price',

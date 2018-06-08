@@ -31,7 +31,7 @@ class Login extends Component {
 	}
 
 	refreshCode(){
-		this.setState({timeStamp: Date.now()});
+		this.setState({timeStamp: Date.now(), error: ''});
 	}
 	
 	handleKeyDown(e){
@@ -40,13 +40,25 @@ class Login extends Component {
 		}
 	}
 
+	checkPhone(rule, value, callback) {
+		if (value == '') {
+			return callback();
+		}
+		const phone = value.replace(/(^\s*)|(\s*$)/g, '');
+		if(!/^1[3-9]\d{9}$/.test(phone) && !/^1[3-9]\d \d{4} \d{4}$/.test(phone)) {
+			return callback('请输入合法的手机号!')
+		}
+		callback();
+	}
+
 	handleSubmit(e){
 	    e.preventDefault();
 
 	    this.props.form.validateFields((err, values) => {
 	      if (!err) {
-	        const { password, ...other } = values;
+	        const { phone, password, ...other } = values;
 	        const param = {
+	        	phone: phone.replace(/ /g, ''), 
 	        	password: MD5(password),
 	        	...other
 	        };
@@ -87,11 +99,11 @@ class Login extends Component {
 							{
 								getFieldDecorator('phone', {
 									rules: [
-										{required: true, message: '请填写手机号！'},
-										{pattern: /^1[3-9]\d{9}$/, message: '请输入合法的手机号!'}
+										{required: true, message: '请输入手机号！'},
+										this.checkPhone
 									]
 								})(
-									<Input placeholder="请填写手机号"/>
+									<Input placeholder="请输入手机号"/>
 								)
 							}
 						</FormItem>						

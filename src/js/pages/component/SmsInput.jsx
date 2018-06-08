@@ -39,7 +39,7 @@ class SmsInput extends Component {
 			
 			const errorMsg = getErrorMsg(msg);
 			message.warn(errorMsg);
-			// ä¸ŽåŽç«¯åå•†error=2, ç»§ç»­60ç§’å€’è®¡æ—¶; å¦åˆ™ï¼Œå€’è®¡æ—¶é‡ç½®
+			// Óëºó¶ËÐ­ÉÌerror=2, ¼ÌÐø60Ãëµ¹¼ÆÊ±; ·ñÔò£¬µ¹¼ÆÊ±ÖØÖÃ
 			error != 2 && this.setState({timeStamp: Date.now()});
 			onSmsError && onSmsError(Date.now());
 		});		
@@ -55,6 +55,7 @@ class SmsInput extends Component {
 					value={value}
 					onChange={onChange}
 					placeholder={placeholder}
+					maxLength="6"
 				/>
 				<div className="area-code-button">
 					<CountDownButton
