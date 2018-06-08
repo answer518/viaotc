@@ -51,9 +51,9 @@ class CashAdresForm extends Component {
 
 				let params = { ...param, ...other, funds_password: fundsPassword, sms_action: '7', area_code, phone, sms_id };
 
-				if (ga_status == 1){
-					params = {...param, ...other, funds_password: fundsPassword};
-				} 
+				// if (ga_status == 1){
+				// 	params = {...param, ...other, funds_password: fundsPassword};
+				// } 
 
 				axios.post('/api/pc/withdraw_addr/add', params)
 					.then((response) => {
@@ -79,75 +79,59 @@ class CashAdresForm extends Component {
 
 		return (
 			<div className="form-container cash-adres-form especially-form">
-					<div className="form-item">
-						<label>地址备注：</label>
-						<FormItem >
-							<div className="form-item-content inset-content">
-								{
-									getFieldDecorator('remark', {
-										rules: [{required: true, message: '请填写地址备注！'}]
-									})(<Input placeholder="请输入地址备注"/>)
-								}
-							</div>
-						</FormItem>
-					</div>
-					<div className="form-item">
-						<label>提币地址：</label>
-						<FormItem className="form-item">
-							<div className="form-item-content inset-content">
-								{
-									getFieldDecorator('addr', {
-										rules: [{required: true, message: '请填写提币地址！'}]
-									})(<Input placeholder="请输入提币地址"/>)
-								}
-							</div>
-						</FormItem>
-					</div>
-					<div className="form-item">
-						<label>手机号：</label>
-						<FormItem className="form-text">
-							<div className="form-item-content">
-								{window.OTC.phone ? formatPhone(window.OTC.phone) : ''}
-							</div>
-						</FormItem>
-					</div>
-				{
-					ga_status == 0 ?
-						<div className="form-item">
-							<label>短信验证码：</label>
-							<FormItem className="form-item">
-								<div className="form-item-content inset-content">
-									{
-										getFieldDecorator('sms_code', {
-										rules: [{required: true, message: '请填写验证码！'}]
-										})(
-											<SmsInput
-												placeholder="请输入短信验证码"
-												canGet = {area_code && phone}
-												param={{area_code, phone}}
-												sms_action="7"
-												onSmsIdChange={this.onSmsIdChange}
-											/>
-										)
-									}
-									{/*<Button type="primary">点击获取</Button>*/}
-								</div>
-							</FormItem>
+				<div className="form-item">
+					<label>地址备注：</label>
+					<FormItem >
+						<div className="form-item-content inset-content">
+							{
+								getFieldDecorator('remark', {
+									rules: [{required: true, message: '请填写地址备注！'}]
+								})(<Input placeholder="请输入地址备注"/>)
+							}
 						</div>
-						:
-						<div className="form-item">
-							<label>谷歌验证码：</label>						
-							<FormItem>
-								<div className="form-item-content">
-									{
-										getFieldDecorator('ga_code', {
-											rules: [{required: true, message: '请填写谷歌验证码！'}]
-										})(<Input placeholder="确认谷歌验证码"/>)
-				}
-								</div>
-							</FormItem>
+					</FormItem>
+				</div>
+				<div className="form-item">
+					<label>提币地址：</label>
+					<FormItem className="form-item">
+						<div className="form-item-content inset-content">
+							{
+								getFieldDecorator('addr', {
+									rules: [{required: true, message: '请填写提币地址！'}]
+								})(<Input placeholder="请输入提币地址"/>)
+							}
 						</div>
-				}
+					</FormItem>
+				</div>
+				<div className="form-item">
+					<label>手机号：</label>
+					<FormItem className="form-text">
+						<div className="form-item-content">
+							{window.OTC.phone ? formatPhone(window.OTC.phone) : ''}
+						</div>
+					</FormItem>
+				</div>
+				<div className="form-item">
+					<label>短信验证码：</label>
+					<FormItem className="form-item">
+						<div className="form-item-content inset-content">
+							{
+								getFieldDecorator('sms_code', {
+								rules: [{required: true, message: '请填写验证码！'}]
+								})(
+									<SmsInput
+										placeholder="请输入短信验证码"
+										canGet = {area_code && phone}
+										param={{area_code, phone}}
+										sms_action="7"
+										onSmsIdChange={this.onSmsIdChange}
+									/>
+								)
+							}
+							{/*<Button type="primary">点击获取</Button>*/}
+						</div>
+					</FormItem>
+				</div>
 				<div className="form-item">
 					<label>资金密码：</label>
 					<FormItem>
@@ -160,6 +144,23 @@ class CashAdresForm extends Component {
 						</div>
 					</FormItem>
 				</div>
+				{
+					ga_status == 0 ?
+						null
+						:
+						<div className="form-item">
+							<label>谷歌验证码：</label>						
+							<FormItem>
+								<div className="form-item-content">
+									{
+										getFieldDecorator('ga_code', {
+											rules: [{required: true, message: '请填写谷歌验证码！'}]
+										})(<Input placeholder="确认谷歌验证码"/>)
+									}
+								</div>
+							</FormItem>
+						</div>
+				}
 				<FormButton
 					className="submit-btn-wrap"
 					onSubmit={this.handleSubmit} 
