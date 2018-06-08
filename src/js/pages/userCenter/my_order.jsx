@@ -129,13 +129,10 @@ class MyOrder extends Component {
 			key: 'operate',
 			width: 150,
 			render: (text, record) => {
-				const myId = window.OTC.id;
-				const { id, ad_type, ad_user_id, order_user_id } = record;
-				const sellerId = ad_type == 'sell' ? ad_user_id : order_user_id;
-				const type = sellerId == myId ? 'sell' : 'buy';
+				const { id, ad_type } = record;
 				
 				return (<div className="operate-list">
-							<Link className="operate-list-item" to={`/app/dealCenter/deal/${type}?order_id=${id}`}>进入交易</Link>
+							<Link className="operate-list-item" to={`/app/dealCenter/deal/${ad_type}?order_id=${id}`}>进入交易</Link>
 							<span className="operate-list-item" onClick={this.showAppeal.bind(this, id)}>申诉</span>
 						</div>)
 			}
@@ -147,13 +144,10 @@ class MyOrder extends Component {
 			key: 'operate',
 			width: 150,
 			render: (text, record) => {
-				const myId = window.OTC.id;
-				const { id, ad_type, ad_user_id, order_user_id } = record;
-				const sellerId = ad_type == 'sell' ? ad_user_id : order_user_id;
-				const type = sellerId == myId ? 'sell' : 'buy';
+				const { id, ad_type } = record;
 
 				return (<div className="operate-list">
-							<Link className="operate-list-item" to={`/app/dealCenter/deal/${type}?order_id=${id}`}>查看</Link>
+							<Link className="operate-list-item" to={`/app/dealCenter/deal/${ad_type}?order_id=${id}`}>查看</Link>
 						</div>)
 			}
 		}];		
