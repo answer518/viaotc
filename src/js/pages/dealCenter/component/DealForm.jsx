@@ -4,6 +4,7 @@ import CoinTypeSelect from 'pages/component/CoinTypeSelect';
 import FormButton from 'pages/component/FormButton';
 import InputRange from 'pages/component/InputRange';
 import ajax from 'utils/request';
+import { debounce } from 'utils/util';
 import classNames from 'classnames';
 import { isNaN, isNil } from 'lodash';
 
@@ -172,9 +173,8 @@ class DealForm extends Component {
 	}
 
 	handleSubmit(e){
-		e.preventDefault();
+		// e.preventDefault();
 		const { onSubmit, type } = this.props;
-
 	   	this.props.form.validateFields((err, values) => {
       		if (!err) {
       			const { ranges, ...other } = values;
@@ -481,7 +481,7 @@ class DealForm extends Component {
 					style={{marginBottom: '28px'}}
 					text="确认发布"
 		        	isDisabled={false}
-		        	onSubmit={this.handleSubmit}
+		        	onSubmit={debounce(this.handleSubmit, 1000, true)}
 		        	error={error}
 		        	errorTime={timeStamp}
 				/>

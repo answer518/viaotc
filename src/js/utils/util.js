@@ -277,3 +277,49 @@ export const getUploadUrl = (url) => {
 export const getRandom = (n,m) => {
   return Math.round(Math.random()*(m-n)+n);
 }
+
+// 函数去抖（连续事件触发结束后只触发一次）
+// sample 1: debounce(function(){}, 1000)
+// 连续事件结束后的 1000ms 后触发
+// sample 1: debounce(function(){}, 1000, true)
+// 连续事件触发后立即触发（此时会忽略第二个参数）
+export const debounce = function(func, wait, immediate) {
+	var timeout, args, context, timestamp, result;
+  
+	var later = function() {
+
+	  var last = _.now() - timestamp;
+  
+	  if (last < wait && last >= 0) {
+		timeout = setTimeout(later, wait - last);
+	  } else {
+		timeout = null;
+		if (!immediate) {
+		  // 执行 func 函数
+		  result = func.apply(context, args);
+		  if (!timeout)
+			context = args = null;
+		}
+	  }
+	};
+  
+	return function() {
+	  context = this;
+	  args = arguments;
+  
+	  timestamp = _.now();
+	  var callNow = immediate && !timeout;
+  
+	  if (!timeout)
+		timeout = setTimeout(later, wait);
+  
+	  // 立即触发
+	  if (callNow) {
+		result = func.apply(context, args);
+		// 解除引用
+		context = args = null;
+	  }
+  
+	  return result;
+	};
+};
