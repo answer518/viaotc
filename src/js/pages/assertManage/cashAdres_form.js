@@ -75,7 +75,7 @@ class CashAdresForm extends Component {
 		const { error, timeStamp } = this.state;
 		const { getFieldDecorator, getFieldsValue } = form;
 		const { remark='', addr='', sms_code='', funds_password='', ga_code='' } = getFieldsValue();
-		const isDisabled = !(remark && addr && funds_password);
+		const isDisabled = ga_status == 1 ? !(remark && addr && ga_code && funds_password) : !(remark && addr && sms_code && funds_password);
 
 		return (
 			<div className="form-container cash-adres-form especially-form">
@@ -103,6 +103,14 @@ class CashAdresForm extends Component {
 							</div>
 						</FormItem>
 					</div>
+					<div className="form-item">
+						<label>手机号：</label>
+						<FormItem className="form-text">
+							<div className="form-item-content">
+								{window.OTC.phone ? formatPhone(window.OTC.phone) : ''}
+							</div>
+						</FormItem>
+					</div>
 				{
 					ga_status == 0 ?
 						<div className="form-item">
@@ -126,7 +134,19 @@ class CashAdresForm extends Component {
 								</div>
 							</FormItem>
 						</div>
-						: null
+						:
+						<div className="form-item">
+							<label>谷歌验证码：</label>						
+							<FormItem>
+								<div className="form-item-content">
+									{
+										getFieldDecorator('ga_code', {
+											rules: [{required: true, message: '请填写谷歌验证码！'}]
+										})(<Input placeholder="确认谷歌验证码"/>)
+				}
+								</div>
+							</FormItem>
+						</div>
 				}
 				<div className="form-item">
 					<label>资金密码：</label>
@@ -135,7 +155,7 @@ class CashAdresForm extends Component {
 							{
 								getFieldDecorator('funds_password', {
 									rules: [{required: true, message: '请填写资金密码！'}]
-								})(<PasswordInput placeholder="请输入资金密码" maxLength={'6'} hasRule={false}/>)
+								})(<PasswordInput placeholder="请输入资金密码" maxLength="6" hasRule={false}/>)
 							}
 						</div>
 					</FormItem>
