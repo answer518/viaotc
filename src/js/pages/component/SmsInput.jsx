@@ -31,14 +31,17 @@ class SmsInput extends Component {
 		})
 		.then((response) => {
 			const { error, data, msg } = response;
+
 			if (error == 0){
 				onSmsIdChange && onSmsIdChange(data.sms_id);
-			} else {
-				const errorMsg = getErrorMsg(msg);
-				message.warn(errorMsg);
-				this.setState({timeStamp: Date.now()});
-				onSmsError && onSmsError(Date.now());
+				return ;
 			}
+			
+			const errorMsg = getErrorMsg(msg);
+			message.warn(errorMsg);
+			// 与后端协商error=2, 继续60秒倒计时; 否则，倒计时重置
+			error != 2 && this.setState({timeStamp: Date.now()});
+			onSmsError && onSmsError(Date.now());
 		});		
 	}
 
