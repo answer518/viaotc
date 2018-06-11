@@ -57,10 +57,10 @@ class HomePage extends Component {
 						</Carousel>
 					</div>
 				</div>	
-				<Alert 
+				{/* <Alert 
 					messages={[{content: "【Bitdad】人民币交易   注册有礼"}]}
 					showIcon
-				/>
+				/> */}
 				<div className="coin-list-container">	
 					<CoinsInfoArea />
 					<div className="suspend-operate chat">
