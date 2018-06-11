@@ -102,10 +102,11 @@ class NewsList extends Component {
 			const subStrContent = content.length > 46 ? `${content.slice(0, 52)}...` : content;
 			
 			return (
-				<div 
+				<a 
 					className="news-list-item" 
 					key={i}
-					onClick={type !== 'system' ? this.goToChat.bind(this, order_id, type) : this.goToMyMessage }
+					target="_blank"
+					href={type !== 'system' ? `/app/dealCenter/deal/${type}?order_id=${order_id}` : '/app/userCenter/myMessage'}
 				>
 					<div className="news-list-item-head">
 						{title}
@@ -116,7 +117,7 @@ class NewsList extends Component {
 					>
 						{subStrContent} 
 					</div>
-				</div>				
+				</a>				
 			);
 		});
 	}
