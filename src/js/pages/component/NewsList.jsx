@@ -37,8 +37,11 @@ class NewsList extends Component {
 	}
 
 	componentDidMount(){
-		this.getSystemMsg();
 		this.getUnreadGroup();
+		// 为保证状态同步，暂定延迟3秒
+		setTimeout(() => {
+			this.getSystemMsg();
+		}, 3000);
 	}
 
 	componentWillUnmount(){
@@ -98,6 +101,7 @@ class NewsList extends Component {
 	 */
 	removeNewsTag() {
 		this.setState({
+			messages: [],
 			unread_num: 0
 		});
 	}
@@ -116,15 +120,12 @@ class NewsList extends Component {
 					key={i}
 					onClick={ this.removeNewsTag.bind(this) }
 					target="_blank"
-					href={type !== 'system' ? `/app/dealCenter/deal/${type}?order_id=${order_id}` : '/app/userCenter/myMessage'}
-				>
+					href={type !== 'system' ? `/app/dealCenter/deal/${type}?order_id=${order_id}` : '/app/userCenter/myMessage'}>
 					<div className="news-list-item-head">
 						{title}
 						<span className="news-list-time">{create_time ? moment(Number(create_time) * 1000).format("YYYY-MM-DD HH:mm:ss") : ''}</span>
 					</div>
-					<div 
-						className="news-list-item-content"
-					>
+					<div className="news-list-item-content">
 						{subStrContent} 
 					</div>
 				</a>				
@@ -139,9 +140,7 @@ class NewsList extends Component {
 			'news-list-wrap': true,
 			'news-unread': unread_num > 0
 		});
-
 		const style = isDataEmpty ? {height: '100px'} : {};
-
 		return (
 			<div className={cls}>
 				<ClickOutside onClickOutside={this.handleClose}>
