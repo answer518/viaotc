@@ -27,7 +27,8 @@ class CashOutForm extends Component {
 			timeStamp: Date.now()
 		};		
 		this.handleSubmit  = this.handleSubmit.bind(this);
-		this.handleSmsIdChange = this.handleSmsIdChange.bind(this); 
+		this.handleSmsIdChange = this.handleSmsIdChange.bind(this);
+		this.checkCoinNumber = this.checkCoinNumber.bind(this);
 	};
 
 	static propTypes = {
@@ -103,9 +104,10 @@ class CashOutForm extends Component {
 	}
 
 	checkCoinNumber(rule, value, callback){
+		const { minimal_amount } = this.state;
 		const numberValue = Number(value) || 0;
-		if (value < 0.01){
-			callback('最小提币数量0.01!');
+		if (numberValue < Number(minimal_amount)){
+			callback(`最小提币数量${minimal_amount}!`);
 		}
 		callback();
 	}

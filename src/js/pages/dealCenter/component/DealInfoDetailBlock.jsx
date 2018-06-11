@@ -148,7 +148,7 @@ class DealInfoDetailBlock extends Component {
 								value: min_amount 
 							}, 
 							sum: {
-								value: min_amount * finalPrice
+								value: (min_amount * finalPrice).toFixed(2)
 							}
 						};
 						this.setState({fields: {...newFields}, coin_price: data.price});

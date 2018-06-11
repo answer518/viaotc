@@ -88,12 +88,24 @@ class AssertManage extends Component {
 
 			}
 		];
+		// return (
+		// 	<div >
+		// 		<Table
+		// 			columns = {columns_assert}
+		// 			title = '资产管理'
+		// 			extral = {<Link to ='/app/assetManage/cashAdres'><span style={{fontSize: '14px'}}>提币地址管理</span></Link>}
+		// 			pagination = {false}
+		// 			url = '/api/pc/balance'
+		// 			tableKey ='balance'
+		// 			rowKey={this.rowKey}
+		// 		/>
+		// 	</div>
+		// )
 		return (
 			<div >
 				<Table
 					columns = {columns_assert}
 					title = '资产管理'
-					extral = {<Link to ='/app/assetManage/cashAdres'><span style={{fontSize: '14px'}}>提币地址管理</span></Link>}
 					pagination = {false}
 					url = '/api/pc/balance'
 					tableKey ='balance'

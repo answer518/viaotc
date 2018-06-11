@@ -19,7 +19,7 @@ class LoginForm extends Component {
 		this.state = {
 			err_times: 0,
 			timeStamp: Date.now(),
-			msg: ''
+			error: ''
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.refreshCode = this.refreshCode.bind(this);
@@ -38,7 +38,7 @@ class LoginForm extends Component {
 				const { error, err_times, msg='' } = response;
 				if (error != 0) {
 					const errorMsg = getErrorMsg(msg);
-					this.setState({err_times: Number(err_times), timeStamp: Date.now(), msg: errorMsg})
+					this.setState({err_times: Number(err_times), timeStamp: Date.now(), error: errorMsg})
 				} else {
 					window.location.reload();
 					//onLoginSuccess && onLoginSuccess();
@@ -59,7 +59,7 @@ class LoginForm extends Component {
 
 	handleSubmit(e){
 		e && e.preventDefault();
-		this.setState({msg: ''});
+		this.setState({error: ''});
 	    this.props.form.validateFields((err, values) => {	
 	      if (!err) {
 	        const { phone, password, ...other } = values;
@@ -77,7 +77,7 @@ class LoginForm extends Component {
 	render(){
 		
 		const { getFieldDecorator, getFieldsValue } = this.props.form;
-		const { err_times, timeStamp, msg } = this.state;
+		const { err_times, timeStamp, error } = this.state;
 		const { phone, password } = getFieldsValue();
 		const isDisabled = !(phone && password);
 
@@ -140,7 +140,7 @@ class LoginForm extends Component {
 				     	style={{marginTop: '10px'}}
 				     	text="登录"
 				     	isDisabled={isDisabled}
-				     	error={msg}
+				     	error={error}
 				     	onSubmit={this.handleSubmit}
 				     	errorTime={timeStamp}
 				     />       
