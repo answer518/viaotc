@@ -125,16 +125,19 @@ class CashOut extends Component {
 				render:(value,record)=>{
 					switch (String(value)){
 						case '0':
-							return <span >未审核</span>;
+							return <span>未审核</span>;
 							break;
 						case '1':
-							return <span >已取消</span>;
+							return <span>已取消</span>;
 							break;
 						case '2':
-							return <span className ="status_success">审核通过</span>;
+							return <span>汇款中</span>;
 							break;
 						case '3':
 							return <span className ="status_fail">审核拒绝 </span>;
+							break;
+						case '4':
+							return <span className ="status_success">完成 </span>;
 							break;
 					}
 				}

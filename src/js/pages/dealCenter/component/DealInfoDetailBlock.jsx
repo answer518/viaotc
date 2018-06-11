@@ -119,7 +119,7 @@ class DealInfoDetailBlock extends Component {
 			const sum = changedFields.sum.value;
 			if (sum == fields.sum.value) return; 
 		    this.setState({
-		      fields: { ...changedFields, amount: {value: finalPrice == 0 ? '' : (sum / finalPrice).toFixed(8)} },
+		      fields: { ...changedFields, amount: {value: finalPrice == 0 ? '' : (sum / finalPrice).toFixed(6)} },
 		    });		
 		}
 	}

@@ -190,6 +190,11 @@ export function getErrorMsg(msg=''){
 	return errorMsg;
 }
 
+export function checkDecimalLength (value, length) {
+    const _t = value * Math.pow(10, length);
+    return _t === parseInt(_t)
+}
+
 export const payMethodMap = {
 	alipay: '支付宝转账',
 	weixin: '微信转账',

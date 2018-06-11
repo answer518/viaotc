@@ -4,7 +4,7 @@ import CoinTypeSelect from 'pages/component/CoinTypeSelect';
 import FormButton from 'pages/component/FormButton';
 import InputRange from 'pages/component/InputRange';
 import ajax from 'utils/request';
-import { debounce } from 'utils/util';
+import { debounce, checkDecimalLength } from 'utils/util';
 import classNames from 'classnames';
 import { isNaN, isNil } from 'lodash';
 
@@ -32,6 +32,7 @@ class DealForm extends Component {
 		this.state = {
 			coin_price: 0,
 			sellable: 0,
+			pay_method_map: {},
 			payments_info: [],
 			realname: ''
 		};
@@ -81,8 +82,12 @@ class DealForm extends Component {
 		ajax.get('/api/pc/pay/get_pay_infos', {})
 			.then((response) => {
 				const { code, data } = response;
+				const pay_method_map = [];
 				if (code == 0){
-	                this.setState({payments_info: data});
+					data.forEach(item => {
+						pay_method_map[item.id] = item.pay_method
+					})
+	                this.setState({payments_info: data, pay_method_map});
 				}
 			})
 	}
@@ -138,6 +143,8 @@ class DealForm extends Component {
 			callback('请输入交易额')
 		} else if (isNaN(minNumber) || isNaN(maxNumber)){
 			callback('请输入数字')
+		} else if (!checkDecimalLength(minNumber, 6) || !checkDecimalLength(maxNumber, 6)){
+			callback('交易额小数点后最多6位')
 		} else if (!(minNumber > 0) || !(maxNumber > 0)){ 
 			callback('交易最小额和交易最大额必须大于0')
 		} else if (maxNumber < minNumber){
@@ -175,10 +182,11 @@ class DealForm extends Component {
 	handleSubmit(e){
 		// e.preventDefault();
 		const { onSubmit, type } = this.props;
+		const { pay_method_map } = this.state; 
 	   	this.props.form.validateFields((err, values) => {
       		if (!err) {
       			const { ranges, ...other } = values;
-        		onSubmit && onSubmit({min_amount: ranges[0], max_amount: ranges[1], ...other});
+        		onSubmit && onSubmit({min_amount: ranges[0], max_amount: ranges[1], pay_method_map, ...other});
       		}
     	});
 	}
@@ -271,7 +279,7 @@ class DealForm extends Component {
 									{
 										payments_info.map((pay, i) => {
 											return (
-												<Checkbox value={pay.pay_method + ':' + pay.id} key={i} style={{display: 'block', marginLeft: 0}}>
+												<Checkbox value={pay.id} key={i} style={{display: 'block', marginLeft: 0}}>
 												{
 													pay.pay_name === '微信支付' ?
 													`微信支付 ${realname} ${pay.account}`

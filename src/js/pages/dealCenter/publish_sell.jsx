@@ -18,7 +18,10 @@ class DealCenterPublishSell extends Component {
 
 	constructor(props){
 		super(props);
+		const { funds_password_status, auth_status, pay_status } = this.props.globalState;
+
 		this.state = {
+			redirect: auth_status != 1 || funds_password_status != 1 || pay_status == false,
 			timeStamp: Date.now(),
 			error: '',		
 			visible: false,	
@@ -63,7 +66,16 @@ class DealCenterPublishSell extends Component {
 		this.publishAd = this.publishAd.bind(this);	
 	}
 
-	componentDidMount(){
+	componentDidMount() {
+		if(this.state.redirect) {
+			browserHistory.push({
+				pathname : '/app/userCenter/dealIdentifiy',
+				query: {
+					  type: '1'
+				}
+			});
+			return;
+		}
 		const { id } = this.props.location.query;
 		this.getAuthInfo();
 		if (!id) return;
@@ -100,7 +112,9 @@ class DealCenterPublishSell extends Component {
 				const { error, data } = response;
 				if (error == 0){
 					const filedKeys = keys(this.state.fields);
-					const { min_amount, max_amount } = data.ad;
+					const { min_amount, max_amount, pay_info } = data.ad;
+					const _pay_info = pay_info.map(pay => pay.id)
+
 					let newFields = {};
 
 					filedKeys.forEach((filedKey) => {
@@ -109,9 +123,8 @@ class DealCenterPublishSell extends Component {
 								value: data.ad[filedKey] 
 							}
 						}
-					});	
-
-					this.setState({fields: {...newFields, ranges: {value: [min_amount, max_amount]}}}); 		
+					});
+					this.setState({fields: {...newFields, pay_info: {value: _pay_info}, ranges: {value: [min_amount, max_amount]}}}); 		
 				}
 			})
 	}	
@@ -137,17 +150,17 @@ class DealCenterPublishSell extends Component {
 	handleAdPost(values){
 		const { id } = this.props.location.query;
 		const { funds_password_status } = this.props.globalState;
-		const { pay_info, coin_type, funds_password, ...other } = values;
-		let _pay_info = [];
-		let _pay_method = [];
-		pay_info.forEach(pay => {
-			let sp = pay.split(':');
-			_pay_method.push(sp[0]);
-			_pay_info.push(sp[1]);
+		const { pay_info, coin_type, funds_password, pay_method_map, ...other } = values;
+		const pay_method = [];
+		pay_info.forEach(pid => {
+			var method = pay_method_map[pid];
+			if (method != null && pay_method.indexOf(method) < 0) {
+				pay_method.push(method);
+			}
 		})
 		let param = {
-			pay_method: _pay_method.join(','),
-			pay_info: _pay_info.join(','),
+			pay_method: pay_method.join(','),
+			pay_info: pay_info.join(','),
 			ad_type: 'sell', 
 			coin_type: coin_type.toLowerCase(),
 			...other
@@ -167,7 +180,10 @@ class DealCenterPublishSell extends Component {
  
 	render(){
 		const { id } = this.props.location.query;
-		const { timeStamp, error, fields, visible, identityStatus } = this.state;
+		const { timeStamp, error, fields, visible, identityStatus, redirect } = this.state;
+		if(redirect === true) {
+			return null;
+		}
 		return (
 			<div>
 				<DealForm 

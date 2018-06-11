@@ -13,8 +13,10 @@ axios.defaults.withCredentials = true;
 axios.interceptors.response.use(
 	response => {
 		const { error, msg } = response.data;
-		if (error == 1 && msg == 'need login'){
+		// error code 11 代表需要登陆
+		if (error == 11){
 			browserHistory.push('/app/entrance/login');
+			return
 		}		
 		// if (error != 0) {
 		// 		Modal.error({

@@ -109,7 +109,10 @@ class MyOrder extends Component {
 		},{
 			title: '交易总额',
 			dataIndex: 'currency_amount',
-			key: 'currency_amount'
+			key: 'currency_amount',
+			render: (text) => {
+				return Number(text).toFixed(2)
+			}
 		},{
 			title: '手续费',
 			dataIndex: 'fee',

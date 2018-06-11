@@ -17,8 +17,8 @@ const initGlobal = {
 	is_shielded: false,
 	username: window.OTC.username || '',
 	ga_status: window.OTC.ga_status || '0',
-	funds_password_status: window.OTC.funds_password_status || '',
-	auth_status: window.OTC.auth_status || '',
+	funds_password_status: window.OTC.funds_password_status || '0',
+	auth_status: window.OTC.auth_status || '0',
 	pay_status: window.OTC.pay || false,
 	phone: window.OTC.phone || '',
 	is_logged: window.OTC.is_logged

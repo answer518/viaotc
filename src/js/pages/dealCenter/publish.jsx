@@ -17,15 +17,15 @@ class DealCenterPublish extends Component {
 		const { funds_password_status, auth_status, pay_status } = globalState;
 
 		// 发布购买广告
-		if(location.pathname === '/app/dealCenter/publish/buy') { 
-			this.state = {
-				redirect : auth_status != 1 || funds_password_status != 1 
-			}
-		} else {
-			this.state = {
-				redirect : auth_status != 1 || funds_password_status != 1 || pay_status !== true
-			}
-		}
+		// if(location.pathname === '/app/dealCenter/publish/buy') { 
+		// 	this.state = {
+		// 		redirect : auth_status != 1 || funds_password_status != 1 
+		// 	}
+		// } else {
+		// 	this.state = {
+		// 		redirect : auth_status != 1 || funds_password_status != 1 || pay_status !== true
+		// 	}
+		// }
 	}
 
 	static defaultProps = {
@@ -42,14 +42,14 @@ class DealCenterPublish extends Component {
 
 	componentWillMount() {
 		
-		if (this.state.redirect) {
-			browserHistory.push({
-				pathname : '/app/userCenter/dealIdentifiy',
-				query: {
-		          	type: '1'
-		        }
-			})
-		}
+		// if (this.state.redirect) {
+		// 	browserHistory.push({
+		// 		pathname : '/app/userCenter/dealIdentifiy',
+		// 		query: {
+		//           	type: '1'
+		//         }
+		// 	})
+		// }
 	}
 
 	componentDidMount() {
@@ -62,7 +62,14 @@ class DealCenterPublish extends Component {
 	}
 
 	renderDealTabs(){
+		const { id } = this.props.location.query;
 		const { blocks, router } = this.props;
+
+		if (id) {
+			return <div className="deal-block-title">
+				<span>修改广告</span>				
+			</div>
+		}
 
 		return blocks.map((block, i) => {
 			const { type, title, link } = block;
@@ -87,19 +94,16 @@ class DealCenterPublish extends Component {
 	render() {
 		return (
 			<div className="body-content">
-				{
-					!this.state.redirect &&  
-					<div className="deal-block">
-						<div className="deal-block-head">
-							<div className="deal-block-tabs clearfix">
-								{this.renderDealTabs()}
-							</div>
-						</div>
-						<div className="deal-block-body">
-							{this.props.children}
+				<div className="deal-block">
+					<div className="deal-block-head">
+						<div className="deal-block-tabs clearfix">
+							{this.renderDealTabs()}
 						</div>
 					</div>
-				}
+					<div className="deal-block-body">
+						{this.props.children}
+					</div>
+				</div>
 			</div>
 		)
 	}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Input, Form, Button, Modal, Checkbox } from 'antd';
 import { browserHistory, Link } from 'react-router';
 import ajax from 'utils/request';
-import { getErrorMsg } from 'utils/util';
+import { getErrorMsg, checkDecimalLength } from 'utils/util';
 import { isNaN } from 'lodash';
 
 const FormItem = Form.Item;
@@ -60,8 +60,10 @@ class DealInfoForm extends Component {
 		const { min_amount, max_amount } = this.props;
 		const numberValue = Number(value);
 		
-		if (value < min_amount || value > max_amount){
+		if (numberValue < min_amount || numberValue > max_amount){
 			callback('交易限额输入有误');
+		} else if (!checkDecimalLength(numberValue, 6)){
+			callback('小数点后最多6位');
 		}
 		callback();
 	}
@@ -85,11 +87,19 @@ class DealInfoForm extends Component {
 		callback();
 	}
 
+	checkSumNumber(rule, value, callback){
+		const number = Number(value);
+		if (!checkDecimalLength(number, 2)){
+			callback('小数点后最多2位');
+		}
+		callback();
+	}
+
 	handleSubmit(e){
 		const { funds_password_status, auth_status, type } = this.props;
 		e.preventDefault();
 		
-		if (false) {
+		if (funds_password_status != 1 || auth_status != 1) {
 
 			browserHistory.push({
 				pathname : '/app/userCenter/dealIdentifiy',
@@ -196,7 +206,8 @@ class DealInfoForm extends Component {
 								validateFirst: true,
 								rules: [
 									{required: true, message: '请输入您要出售的金额'},
-									this.checkIsNumber
+									this.checkIsNumber,
+									this.checkSumNumber
 								]
 							})(
 								<Input placeholder="请输入您要出售的金额" disabled={disabled}/>
@@ -243,7 +254,8 @@ class DealInfoForm extends Component {
 								validateFirst: true,
 								rules: [
 									{required: true, message: '请输入应付金额'},
-									this.checkIsNumber
+									this.checkIsNumber,
+									this.checkSumNumber
 								]									
 							})(
 								<Input placeholder="请输入您应付的金额" disabled={disabled}/>

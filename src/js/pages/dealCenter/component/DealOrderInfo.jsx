@@ -180,9 +180,10 @@ class DealOrderInfo extends Component {
 
 	renderOperate (type) {
 		const { chatStatus } = this.props;
+		const { expect_period_time } = this.state;
 		const { expect_period='', coin_type='' } = this.state.order;
 
-		const expectPeriod = isNil(expect_period) ? '-' : `${expect_period}分钟`;
+		const expectPeriod = isNil(expect_period_time) ? '-' : `${expect_period_time}分钟`;
 
 		if (chatStatus == 0) {
 			if (type == 'buy') {
@@ -271,7 +272,7 @@ class DealOrderInfo extends Component {
 						</div>
 						<div className="order-info-item">
 							<label>应付金额：</label>
-							<span>{`${currency_amount} ${currency}`}</span>
+							<span>{`${currency_amount.toFixed(2)} ${currency}`}</span>
 						</div>
 						<div className="order-info-item">
 							<label>交易状态：</label>

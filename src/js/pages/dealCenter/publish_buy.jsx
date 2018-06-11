@@ -18,7 +18,10 @@ class DealCenterPublishBuy extends Component {
 
 	constructor(props){
 		super(props);
+		const { funds_password_status, auth_status } = this.props.globalState;
+
 		this.state = {
+			redirect: auth_status != 1 || funds_password_status != 1 ,
 			timeStamp: Date.now(),
 			error: '',
 			identityStatus: 1,			
@@ -56,12 +59,18 @@ class DealCenterPublishBuy extends Component {
 		this.handleFormChange = this.handleFormChange.bind(this);
 		this.handleModalClose = this.handleModalClose.bind(this);
 		this.handleBtnClick = this.handleBtnClick.bind(this);	
-		this.publishAd = this.publishAd.bind(this);				
+		this.publishAd = this.publishAd.bind(this);
 	}
 
 	componentDidMount(){
+		if (this.state.redirect) {
+			browserHistory.push({
+				pathname : '/app/userCenter/dealIdentifiy'
+			})
+			return;
+		}
 		const { id } = this.props.location.query;
-		if (!id) return;
+		if( !id ) return;
 		this.getAdInfo(id);
 	}
 
@@ -85,7 +94,13 @@ class DealCenterPublishBuy extends Component {
 				const { error, data } = response;
 				if (error == 0){
 					const filedKeys = keys(this.state.fields);
-					const { min_amount, max_amount } = data.ad;
+					const { min_amount, max_amount, pay_method } = data.ad;
+					const _pay_method = pay_method.map(pay => {
+						if (pay === '支付宝') return 'alipay';
+						else if (pay === '微信支付') return 'weixin';
+						else return 'bank_transfer';
+					})
+					
 					let newFields = {};
 
 					filedKeys.forEach((filedKey) => {
@@ -94,9 +109,8 @@ class DealCenterPublishBuy extends Component {
 								value: data.ad[filedKey] 
 							}
 						}
-					});	
-
-					this.setState({fields: {...newFields, ranges: {value: [min_amount, max_amount]}}}); 	
+					});
+					this.setState({fields: {...newFields, pay_method: {value: _pay_method}, ranges: {value: [min_amount, max_amount]}}}); 	
 				}
 			})
 	}
@@ -123,7 +137,7 @@ class DealCenterPublishBuy extends Component {
 	handleAdPost(values){
 		const { id } = this.props.location.query;
 		const { funds_password_status } = this.props.globalState;
-		const { pay_method, coin_type, funds_password, ...other } = values;
+		const { pay_method, coin_type, funds_password, pay_method_map, ...other } = values;
 		let param = {
 			pay_method: pay_method.join(','),
 			ad_type: 'buy', 
@@ -144,8 +158,11 @@ class DealCenterPublishBuy extends Component {
 
 	render(){
 		const { id } = this.props.location.query;
-		const { timeStamp, error, fields, visible, identityStatus } = this.state;
-
+		const { timeStamp, error, fields, visible, identityStatus, redirect } = this.state;
+		if(redirect === true) {
+			return null;
+		}
+		
 		return (
 			<div>
 				<DealForm 

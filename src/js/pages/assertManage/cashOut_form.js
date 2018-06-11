@@ -6,8 +6,8 @@ import SmsInput from 'pages/component/SmsInput';
 import PasswordInput from 'pages/component/PasswordInput';
 import FormButton from 'pages/component/FormButton';
 import axios from 'utils/request';
-import { getErrorMsg } from 'utils/util';
-import { isNaN } from 'lodash';
+import { getErrorMsg, checkDecimalLength } from 'utils/util';
+import { isNaN, } from 'lodash';
 import MD5 from 'md5';
 
 const FormItem = Form.Item;
@@ -48,6 +48,8 @@ class CashOutForm extends Component {
 		const numberValue = Number(value);
 		if (isNaN(numberValue)) {
 			callback('请输入数字');
+		} else if (!checkDecimalLength(numberValue, 6)) {
+			callback('小数点后最多6位');
 		}
 		callback();
 	}	
