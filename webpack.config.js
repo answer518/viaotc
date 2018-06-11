@@ -12,7 +12,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const base = {
 	entry: {
-		app: './src/js/index.jsx'
+		app: ['babel-polyfill', './src/js/index.jsx']
 	},
 	module: {
 		rules: [
@@ -175,8 +175,8 @@ if (env === 'build_dev') {
 if (env === 'build_cdn') {
     module.exports = merge(base, {
         output: { 
-            path: path.resolve(__dirname, './static/'),
-            publicPath: '//cn-cdn.jtcool.com/www/static/',   
+            path: path.resolve(__dirname, './www/static/'),
+            publicPath: '//www.bitdad.com/www/static/',   
             filename: '[name].js',
             chunkFilename: '[name].chunk.js'
         },
