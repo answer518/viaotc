@@ -93,6 +93,15 @@ class NewsList extends Component {
 		browserHistory.push({pathname: `/app/dealCenter/deal/${type}`, query: {order_id}});
 	}
 
+	/**
+	 * 移除新消息标志
+	 */
+	removeNewsTag() {
+		this.setState({
+			unread_num: 0
+		});
+	}
+
 	renderMessages(){
 		const { messages } = this.state;
 
@@ -105,6 +114,7 @@ class NewsList extends Component {
 				<a 
 					className="news-list-item" 
 					key={i}
+					onClick={ this.removeNewsTag.bind(this) }
 					target="_blank"
 					href={type !== 'system' ? `/app/dealCenter/deal/${type}?order_id=${order_id}` : '/app/userCenter/myMessage'}
 				>
@@ -139,8 +149,8 @@ class NewsList extends Component {
 						className="news-list-head"
 						onClick={this.handleShow}
 					>
-						<span>消息</span><span>{unread_num > 0 && `(${unread_num})`}</span>
-					</div>				
+						<span>消息</span>
+					</div>
 					{show && 
 						<div className="news-list-body">
 							<div className="news-list-body-head">
