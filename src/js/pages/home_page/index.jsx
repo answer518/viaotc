@@ -47,11 +47,11 @@ class HomePage extends Component {
 					<div className="login-register-wrap">
 						{is_logged != 1 && <LoginForm/>}
 						<Carousel autoplay className="banner">
-						    <div className="banner-wrap" onClick={this.handleBannerClick.bind(this, 'notice')}>
+						    <div className="banner-wrap">
 						    	<img src={`${baseUrl}/www/banner_2.jpg`}/>
 						    	{is_logged != 1 && <Link className="link-btn" to="/app/entrance/register" onClick={this.handleRegister}>注册有礼</Link>}
 						    </div>
-						    <div className="banner-wrap" onClick={this.handleBannerClick.bind(this, 'register')}>
+						    <div className="banner-wrap">
 						    	<img src={`${baseUrl}/www/banner_3.jpg`}/>
 						    </div>										    						
 						</Carousel>
@@ -63,12 +63,12 @@ class HomePage extends Component {
 				/> */}
 				<div className="coin-list-container">	
 					<CoinsInfoArea />
-					<div className="suspend-operate chat">
+					{/* <div className="suspend-operate chat">
 						<div className="service-qrcode">
 							<p>客服微信</p>
 							<img src={kefuImg} />
 						</div>
-					</div>					
+					</div> */}
 				</div>	
 				<div className="product-advantage">
 					<div className="product-advantage-content">
