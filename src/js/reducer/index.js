@@ -63,6 +63,12 @@ const Global = createReducer(initGlobal, {
 			is_shielded: action.bool
 		}
 	},
+	[ActionType.UPDATE_AUTH_STATSUS](state, action){
+		return {
+			...state,
+			auth_status: action.auth_status
+		}
+	},
 	[ActionType.UPDATE_GA_STATSUS](state, action){
 		return {
 			...state,

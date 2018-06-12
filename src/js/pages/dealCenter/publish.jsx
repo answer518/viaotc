@@ -13,19 +13,6 @@ class DealCenterPublish extends Component {
 
 	constructor(props){
 		super(props);
-		const { location, globalState} = this.props;
-		const { funds_password_status, auth_status, pay_status } = globalState;
-
-		// 发布购买广告
-		// if(location.pathname === '/app/dealCenter/publish/buy') { 
-		// 	this.state = {
-		// 		redirect : auth_status != 1 || funds_password_status != 1 
-		// 	}
-		// } else {
-		// 	this.state = {
-		// 		redirect : auth_status != 1 || funds_password_status != 1 || pay_status !== true
-		// 	}
-		// }
 	}
 
 	static defaultProps = {
@@ -41,15 +28,6 @@ class DealCenterPublish extends Component {
 	}
 
 	componentWillMount() {
-		
-		// if (this.state.redirect) {
-		// 	browserHistory.push({
-		// 		pathname : '/app/userCenter/dealIdentifiy',
-		// 		query: {
-		//           	type: '1'
-		//         }
-		// 	})
-		// }
 	}
 
 	componentDidMount() {

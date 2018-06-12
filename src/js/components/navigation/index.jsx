@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';
 import CoinAmountList from 'pages/component/CoinAmountList';
+import { connect } from 'react-redux';
+import * as globalAction from 'src/js/actions';
+import { bindActionCreators } from 'redux';
+import ajax from 'utils/request';
 import './index.less'; 
 
 class Navigation extends Component {
@@ -39,11 +43,25 @@ class Navigation extends Component {
 
 	gotoPublish(){
 		const { is_logged } = this.context;
-		if (is_logged == 1){
-			browserHistory.push('/app/dealCenter/publish/buy');
-		} else {
-			browserHistory.push('/app/entrance/login');
-		}
+
+		ajax.get('/api/pc/auth/authinfo')
+			.then((response) => {
+				return response;
+			}).then((response) => {
+				const { data: {authinfo : { status }} } = response;
+				if (is_logged == 1) {
+					this.props.actions.updateAuthStatus(status);
+					if(status == 1) {
+						browserHistory.push('/app/dealCenter/publish/buy');
+					} else {
+						browserHistory.push({
+							pathname : '/app/userCenter/dealIdentifiy'
+						})
+					}
+				} else {
+					browserHistory.push('/app/entrance/login');
+				}
+			})
 	}
 
 	goToIndex(){
@@ -100,4 +118,12 @@ class Navigation extends Component {
 	}
 }
 
-export default Navigation;
+function mapStateToProps(state) {
+    return {globalState: state}
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: bindActionCreators(globalAction, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

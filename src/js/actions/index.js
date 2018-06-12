@@ -54,6 +54,13 @@ export function updateFundPassword(funds_password_status){
 	}	
 }
 
+export function updateAuthStatus(auth_status){
+	return {
+		type: ActionType.UPDATE_AUTH_STATSUS,
+		auth_status
+	}
+}
+
 export function updatePayStatus(pay_status){
 	return {
 		type: ActionType.UPDATE_PAY_STATSUS,
