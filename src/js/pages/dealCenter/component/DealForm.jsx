@@ -4,9 +4,9 @@ import CoinTypeSelect from 'pages/component/CoinTypeSelect';
 import FormButton from 'pages/component/FormButton';
 import InputRange from 'pages/component/InputRange';
 import ajax from 'utils/request';
-import { debounce, checkDecimalLength } from 'utils/util';
+import { checkDecimalLength } from 'utils/util';
 import classNames from 'classnames';
-import { isNaN, isNil } from 'lodash';
+import { isNaN, isNil, debounce } from 'lodash';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -36,7 +36,7 @@ class DealForm extends Component {
 			payments_info: [],
 			realname: ''
 		};
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleSubmit = debounce(this.handleSubmit, 1000).bind(this);
 		this.handleSelectChange = this.handleSelectChange.bind(this);
 		this.checkSellable = this.checkSellable.bind(this);
 		this.checkPrice = this.checkPrice.bind(this);
@@ -157,6 +157,8 @@ class DealForm extends Component {
 	checkPremiumRange(rule, value, callback){
 		if (value > 20 || value < -10){ 
 			callback('溢价范围必须在 -10% 到 20% 之间')
+		} else if (!checkDecimalLength(value, 2)){
+			callback('溢价率小数点后最多2位')
 		} else {
 			callback();
 		}

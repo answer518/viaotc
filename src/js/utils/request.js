@@ -16,7 +16,7 @@ axios.interceptors.response.use(
 		// error code 11 代表需要登陆
 		if (error == 11){
 			browserHistory.push('/app/entrance/login');
-			return
+			// return
 		}		
 		// if (error != 0) {
 		// 		Modal.error({

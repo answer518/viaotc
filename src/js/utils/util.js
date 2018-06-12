@@ -191,8 +191,12 @@ export function getErrorMsg(msg=''){
 }
 
 export function checkDecimalLength (value, length) {
-    const _t = value * Math.pow(10, length);
-    return _t === parseInt(_t)
+    let _t = Number(value);
+    if (isNaN(_t)) return false;
+    _t = _t.toString();
+    if (!/\./.test(_t)) return true;
+    const reg = new RegExp("\\.\\d{0," + length + "}$");
+    return reg.test(_t);
 }
 
 export const payMethodMap = {

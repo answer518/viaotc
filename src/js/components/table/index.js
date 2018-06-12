@@ -47,12 +47,14 @@ export default class CustomTable extends Component {
 		let params = pagination ?{...param,page:this.state.page}:param;
 		axios.get(url,params).then(
 			d => {
-				let data = d.data;
-				this.setState({
-					data:data[tableKey],
-					loading:false,
-					total:data.total ? data.total : 0
-				})
+				if (d.error == 0) {
+					let data = d.data;
+					this.setState({
+						data:data[tableKey],
+						loading:false,
+						total:data.total ? data.total : 0
+					})
+				}
 			}
 		)
 	}
