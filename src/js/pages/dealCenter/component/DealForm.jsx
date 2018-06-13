@@ -4,9 +4,9 @@ import CoinTypeSelect from 'pages/component/CoinTypeSelect';
 import FormButton from 'pages/component/FormButton';
 import InputRange from 'pages/component/InputRange';
 import ajax from 'utils/request';
-import { checkDecimalLength } from 'utils/util';
+import { checkDecimalLength, debounce } from 'utils/util';
 import classNames from 'classnames';
-import { isNaN, isNil, debounce } from 'lodash';
+import { isNaN, isNil } from 'lodash';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -36,7 +36,7 @@ class DealForm extends Component {
 			payments_info: [],
 			realname: ''
 		};
-		this.handleSubmit = debounce(this.handleSubmit, 5000).bind(this);
+		this.handleSubmit = debounce(this.handleSubmit, 5000, true).bind(this);
 		this.handleSelectChange = this.handleSelectChange.bind(this);
 		this.checkSellable = this.checkSellable.bind(this);
 		this.checkPrice = this.checkPrice.bind(this);
