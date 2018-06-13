@@ -149,7 +149,7 @@ class DealInfoForm extends Component {
 						<div className="form-item-content">
 							{
 								pay_info.length < 1 ?
-								(<Link to="/app/userCenter/myPayment" className="" style="color:#f04134;">缺少可用的支付方式，请您添加</Link>)
+								(<Link to="/app/userCenter/myPayment" className="" style={{color: '#f04134'}}>缺少可用的支付方式，请您添加</Link>)
 								:
 								getFieldDecorator('pay_info', {
 									rules: [{required: true, message: `请选择支付方式`}]
