@@ -136,7 +136,6 @@ class MyOrder extends Component {
 				
 				return (<div className="operate-list">
 							<Link className="operate-list-item" to={`/app/dealCenter/deal/${ad_type}?order_id=${id}`}>进入交易</Link>
-							<span className="operate-list-item" onClick={this.showAppeal.bind(this, id)}>申诉</span>
 						</div>)
 			}
 		}];
