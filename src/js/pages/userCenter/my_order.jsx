@@ -132,10 +132,11 @@ class MyOrder extends Component {
 			key: 'operate',
 			width: 150,
 			render: (text, record) => {
-				const { id, ad_type } = record;
+				const { id, ad_type, status } = record;
 				
 				return (<div className="operate-list">
 							<Link className="operate-list-item" to={`/app/dealCenter/deal/${ad_type}?order_id=${id}`}>进入交易</Link>
+							{status == '2' && <span className="operate-list-item" onClick={this.showAppeal.bind(this, id)}>申诉</span>}
 						</div>)
 			}
 		}];

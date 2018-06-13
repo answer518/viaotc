@@ -48,12 +48,14 @@ class InputRange extends Component {
             <div className="input-range-wrap cleafix">
                 <input
                     type="text"
+                    name="min"
                     value={min}
                     onChange={this.handleMinChange}
                 />
                 <div className="divide-text relate">{divide}</div>
                 <input
                     type="text"
+                    name="max"
                     value={max}
                     onChange={this.handleMaxChange}
                 />

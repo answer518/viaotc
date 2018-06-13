@@ -97,7 +97,7 @@ class Navigation extends Component {
 				<div className="navigation-content clearfix">
 					<div className="logo" onClick={this.goToIndex}>
 						<div className="logo-img"></div>
-						<span className="text">Bitdad</span>
+						<span className="text"></span>
 					</div>
 					<ul className="menu clearfix">
 						{this.renderLinks()}														

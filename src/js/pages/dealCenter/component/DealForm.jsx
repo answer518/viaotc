@@ -36,7 +36,7 @@ class DealForm extends Component {
 			payments_info: [],
 			realname: ''
 		};
-		this.handleSubmit = debounce(this.handleSubmit, 1000).bind(this);
+		this.handleSubmit = debounce(this.handleSubmit, 5000).bind(this);
 		this.handleSelectChange = this.handleSelectChange.bind(this);
 		this.checkSellable = this.checkSellable.bind(this);
 		this.checkPrice = this.checkPrice.bind(this);
@@ -491,7 +491,7 @@ class DealForm extends Component {
 					style={{marginBottom: '28px'}}
 					text="确认发布"
 		        	isDisabled={false}
-		        	onSubmit={debounce(this.handleSubmit, 1000, true)}
+		        	onSubmit={this.handleSubmit}
 		        	error={error}
 		        	errorTime={timeStamp}
 				/>
