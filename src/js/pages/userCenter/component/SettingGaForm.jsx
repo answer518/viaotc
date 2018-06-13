@@ -42,6 +42,9 @@ class SettingGaForm extends Component {
 				const { error, data } = response;
 				if (error == 0){
 					this.setState({ga_key: data.ga_key});
+				} else {
+					const errorMsg = getErrorMsg(msg);
+					this.setState({timeStamp: Date.now(), error: errorMsg})
 				}
 			})
 	}
