@@ -26,7 +26,6 @@ const options = {
 class DealForm extends Component {
 
 	static displayName = 'DealForm';
-
 	constructor(props){
 		super(props);
 		this.state = {
@@ -44,7 +43,7 @@ class DealForm extends Component {
 
 	componentDidMount(){
 		const { type } = this.props;
-		const { coin_type } = this.props.fields;
+		const { coin_type, ranges } = this.props.fields;
 		type == 'sell' && this.getBalanceDetail(coin_type.value || 'eth');
 		this.getCoinPrice(coin_type.value || 'eth');
 		this.getPaymentsInfo();
@@ -122,10 +121,14 @@ class DealForm extends Component {
 	}
 
 	checkSellable(rule, value, callback){
-		const { type, fields } = this.props;
+		const { type, fields, location, maxAmount, id} = this.props;
 		const { sellable } = this.state;
-		const max = Number(value[1]) || 0;
+		let max = Number(value[1]) || 0;
 
+		if(id) {
+			max = max - maxAmount;
+		}
+		
 		if (type == 'sell' && (max > sellable)){ 
 			callback(`最大可售额${sellable}${fields.coin_type.value.toUpperCase()}`);
 		}
@@ -194,10 +197,10 @@ class DealForm extends Component {
 	}
 
 	render(){
-		const { type, form, error, timeStamp, fields, id } = this.props;
+		const { type, form, error, timeStamp, fields, id, fundsPassword } = this.props;
 		const { coin_price, sellable, payments_info, realname } = this.state;
 		const { getFieldDecorator, getFieldsValue, getFieldError } = form;
-		const { coin_type, currency, premium, is_fixed_price } = fields;
+		const { coin_type, currency, premium, is_fixed_price, funds_password } = fields;
 
 		const coinTypeValue = coin_type.value.toUpperCase();
 		const premiumValue = premium.value;
@@ -464,7 +467,7 @@ class DealForm extends Component {
 						<div className="tip">{type == 'sell' ? '要求对方在多少时间内完成支付，超时未支付的订单将被系统自动取消' : '承诺在多少时间内完成支付，超时未支付的订单将被系统自动取消'}</div>
 					</div>
 				</FormItem>
-				{window.OTC.funds_password_status == 1 && <FormItem
+				{fundsPassword == 1 && <FormItem
 					className="form-item"
 					style={{marginBottom: '30px'}}
 				>

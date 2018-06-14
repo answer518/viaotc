@@ -26,6 +26,7 @@ class DealCenterPublishSell extends Component {
 			error: '',		
 			visible: false,	
 			identityStatus: 1,
+			ranges: {value: []},
 			fields: {
 				coin_type: {
 					value: 'eth'
@@ -124,7 +125,8 @@ class DealCenterPublishSell extends Component {
 							}
 						}
 					});
-					this.setState({fields: {...newFields, pay_info: {value: _pay_info}, ranges: {value: [min_amount, max_amount]}}}); 		
+					
+					this.setState({fields: {...newFields, pay_info: {value: _pay_info}, ranges: {value: [min_amount, max_amount]}}, ranges: {value: [min_amount, max_amount]}}); 	
 				}
 			})
 	}	
@@ -180,7 +182,9 @@ class DealCenterPublishSell extends Component {
  
 	render(){
 		const { id } = this.props.location.query;
-		const { timeStamp, error, fields, visible, identityStatus, redirect } = this.state;
+		const { timeStamp, error, fields, visible, identityStatus, redirect, ranges } = this.state;
+		const { funds_password_status } = this.props.globalState;
+		
 		if(redirect === true) {
 			return null;
 		}
@@ -192,7 +196,9 @@ class DealCenterPublishSell extends Component {
 					error={error}
 					onSubmit={this.handleAdPost}
 					fields={fields}
+					maxAmount={ranges.value[1] || 0}
 					onChange={this.handleFormChange}
+					fundsPassword={funds_password_status}
 					onTypeChange={this.handleTypeChange}
 					id={id}
 				/>

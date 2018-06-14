@@ -24,7 +24,8 @@ class DealCenterPublishBuy extends Component {
 			redirect: auth_status != 1 || funds_password_status != 1 ,
 			timeStamp: Date.now(),
 			error: '',
-			identityStatus: 1,			
+			identityStatus: 1,
+			ranges: {value: []},	
 			fields: {
 				coin_type: {
 					value: 'eth'
@@ -158,7 +159,8 @@ class DealCenterPublishBuy extends Component {
 
 	render(){
 		const { id } = this.props.location.query;
-		const { timeStamp, error, fields, visible, identityStatus, redirect } = this.state;
+		const { timeStamp, error, fields, visible, identityStatus, redirect, ranges } = this.state;
+		const { funds_password_status } = this.props.globalState;
 		if(redirect === true) {
 			return null;
 		}
@@ -169,9 +171,11 @@ class DealCenterPublishBuy extends Component {
 					id={id}
 					type="buy"
 					timeStamp={timeStamp}
-					error={error}					
+					error={error}			
 					onSubmit={this.handleAdPost}
 					fields={fields}
+					maxAmount={ranges.value[1] || 0}
+					fundsPassword={funds_password_status}
 					onChange={this.handleFormChange}
 				/>
 				<Modal
