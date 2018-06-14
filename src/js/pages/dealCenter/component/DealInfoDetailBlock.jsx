@@ -307,7 +307,7 @@ class DealInfoDetailBlock extends Component {
 								交易前请阅读《Bitdad网络服务条款》以及常见问题、交易指南等帮助文档。
 			 				</div>		
 			 				<div className="deal-info-detal-tips-item">
-			 					申述保护网上交易的买卖双方。在发生争议的情况下，我们将平复所提供的的所有信息，并将托管的数字货币放行给其合法所有者
+			 					申述保护网上交易的买卖双方。在发生争议的情况下，我们将平复所提供的所有信息，并将托管的数字货币放行给其合法所有者
 			 				</div>		 					 							 							 			
 				 		</div>
 				 	</div>

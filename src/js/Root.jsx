@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Header from 'components/header';
 import Navigation from 'components/navigation';
 import Footer from 'components/footer';
+import FloatEMail from 'components/float-email';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as globalAction from 'src/js/actions';
@@ -53,6 +54,7 @@ class Root extends Component {
 				<div className="main">
 					{this.props.children}
 				</div>
+				<FloatEMail />
 				<Footer />			
 			</div>
 		)
