@@ -39,7 +39,7 @@ class SettingGaForm extends Component {
 	getGaKey(){
 		ajax.get('/api/pc/ga/get_key')
 			.then((response) => {
-				const { error, data } = response;
+				const { error, msg='', data } = response;
 				if (error == 0){
 					this.setState({ga_key: data.ga_key});
 				} else {
