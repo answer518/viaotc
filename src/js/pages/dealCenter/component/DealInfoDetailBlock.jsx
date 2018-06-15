@@ -99,7 +99,7 @@ class DealInfoDetailBlock extends Component {
 	handleFormChange(changedFields){	
 		const { coin_price, fields } = this.state;
 		const { is_fixed_price, price=0, premium=0 } = this.props.info;
-		const finalPrice = (is_fixed_price == 1 ? price : coin_price * (1 + Number(premium) / 100)).toFixed(2);	
+		const finalPrice = is_fixed_price == 1 ? price : coin_price * (1 + Number(premium) / 100);	
 
 		if ('amount' in changedFields){
 			const amount = changedFields.amount.value;
@@ -231,7 +231,7 @@ class DealInfoDetailBlock extends Component {
 		const { coin_price, fields, sellable, pay_info, realname } = this.state;
 		const { funds_password_status, auth_status } = globalState;
 		const { coin_type='', premium=0, price='', currency='', pay_method=[], min_amount='', max_amount='', expect_period='', is_fixed_price, user_id='' } = info;
-		const finalPrice = (is_fixed_price == 1 ? price : coin_price * (1 + Number(premium) / 100)).toFixed(2);
+		const finalPrice = is_fixed_price == 1 ? price : (coin_price * (1 + Number(premium) / 100)).toFixed(2);
 		const coinType = coin_type.toUpperCase();
 
 		const usablePayInfo = pay_info.filter(item => {
