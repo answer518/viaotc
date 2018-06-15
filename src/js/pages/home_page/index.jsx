@@ -46,11 +46,7 @@ class HomePage extends Component {
 				<div className="carousel-container">
 					<div className="login-register-wrap">
 						{is_logged != 1 && <LoginForm/>}
-						<Carousel autoplay className="banner">
-						    <div className="banner-wrap">
-						    	<img src={`${baseUrl}/www/banner_2.jpg`}/>
-						    	{is_logged != 1 && <Link className="link-btn" to="/app/entrance/register" onClick={this.handleRegister}>注册有礼</Link>}
-						    </div>
+						<Carousel autoplay={false} dots={false} className="banner">
 						    <div className="banner-wrap">
 						    	<img src={`${baseUrl}/www/banner_3.jpg`}/>
 						    </div>										    						

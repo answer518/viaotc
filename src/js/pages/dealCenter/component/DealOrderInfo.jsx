@@ -264,7 +264,7 @@ class DealOrderInfo extends Component {
 							<label>
 								<span style={{marginRight: '28px'}}>单</span>价：
 							</label>
-							<span>{`${coin_price} ${currency}`}</span>
+							<span>{`${Number(coin_price).toFixed(2)} ${currency}`}</span>
 						</div>
 						<div className="order-info-item">
 							<label>交易数量：</label>

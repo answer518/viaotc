@@ -98,8 +98,8 @@ class DealInfoDetailBlock extends Component {
 
 	handleFormChange(changedFields){	
 		const { coin_price, fields } = this.state;
-		const { is_fixed_price, price=0 } = this.props.info;
-		const finalPrice = is_fixed_price == 0 ? coin_price : price;	
+		const { is_fixed_price, price=0, premium=0 } = this.props.info;
+		const finalPrice = (is_fixed_price == 1 ? price : coin_price * (1 + Number(premium) / 100)).toFixed(2);	
 
 		if ('amount' in changedFields){
 			const amount = changedFields.amount.value;
@@ -134,14 +134,14 @@ class DealInfoDetailBlock extends Component {
 	}
 
 	getCoinPrice(coin_type, info){
-		const { min_amount, max_amount, is_fixed_price } = info;
+		const { min_amount, max_amount, is_fixed_price, premium } = info;
 		const infoPrice = info.price;
 
 		ajax.get('/api/pc/market/coin_price',{coin_type})
 			.then((response) => {
 				const { error, data } = response;
 				if (error == 0){
-					const finalPrice = is_fixed_price == 1 ? infoPrice : data.price; 
+					const finalPrice = is_fixed_price == 1 ? infoPrice : data.price * (1 + Number(premium) / 100); 
 					if (min_amount > 0 && (min_amount == max_amount)){
 						const newFields = {
 							amount: {
@@ -193,45 +193,45 @@ class DealInfoDetailBlock extends Component {
 	renderPayInfo () {
 		const { pay_method = [], pay_info = null } = this.props.info;
 
-		if (pay_info == null) {
+		// if (pay_info == null) {
 			return (
 				<div className="inline-middle">{pay_method.join('/')}</div>
 			)
-		} else {
-			return (
-				<div className="pay-info-block">
-					{pay_info.map((pay, i) => {
-						if (pay.pay_method === 'alipay') {
-							return <div className="pay-info-section pay-info-alipay" key={i}>
-								<span>{pay.pay_info.pay_name} {pay.realname} {pay.pay_info.account}</span>
-								<Popover content={<img src={pay.pay_info.qrcode} />} title="收款二维码">
-									<span className={`pay-info-qrcode pay-info-qrcode-${pay.pay_method}`}></span>
-								</Popover>
-							</div>
-						} else if (pay.pay_method === 'weixin') {
-							return <div className="pay-info-section pay-info-weixin" key={i}>
-								<span>{pay.pay_info.pay_name} {pay.realname} {pay.pay_info.account}</span>
-								<Popover content={<img src={pay.pay_info.qrcode} />} title="收款二维码">
-									<span className='pay-info-qrcode pay-info-qrcode-weixin'></span>
-								</Popover>
-							</div>
-						} else {
-							return <div className="pay-info-section pay-info-bank" key={i}>
-								<span>{pay.pay_info.pay_name} {pay.realname} {pay.pay_info.bank_account} {pay.pay_info.account_branch} {pay.pay_info.bank_card_num}</span>
-							</div>
-						}
-					})}
-				</div>
-			)
-		}
+		// } else {
+		// 	return (
+		// 		<div className="pay-info-block">
+		// 			{pay_info.map((pay, i) => {
+		// 				if (pay.pay_method === 'alipay') {
+		// 					return <div className="pay-info-section pay-info-alipay" key={i}>
+		// 						<span>{pay.pay_info.pay_name} {pay.realname} {pay.pay_info.account}</span>
+		// 						<Popover content={<img src={pay.pay_info.qrcode} />} title="收款二维码">
+		// 							<span className={`pay-info-qrcode pay-info-qrcode-${pay.pay_method}`}></span>
+		// 						</Popover>
+		// 					</div>
+		// 				} else if (pay.pay_method === 'weixin') {
+		// 					return <div className="pay-info-section pay-info-weixin" key={i}>
+		// 						<span>{pay.pay_info.pay_name} {pay.realname} {pay.pay_info.account}</span>
+		// 						<Popover content={<img src={pay.pay_info.qrcode} />} title="收款二维码">
+		// 							<span className='pay-info-qrcode pay-info-qrcode-weixin'></span>
+		// 						</Popover>
+		// 					</div>
+		// 				} else {
+		// 					return <div className="pay-info-section pay-info-bank" key={i}>
+		// 						<span>{pay.pay_info.pay_name} {pay.realname} {pay.pay_info.bank_account} {pay.pay_info.account_branch} {pay.pay_info.bank_card_num}</span>
+		// 					</div>
+		// 				}
+		// 			})}
+		// 		</div>
+		// 	)
+		// }
 	}
 
 	render(){
 		const { type, info, ad_id, globalState } = this.props;
 		const { coin_price, fields, sellable, pay_info, realname } = this.state;
 		const { funds_password_status, auth_status } = globalState;
-		const { coin_type='', price='', currency='', pay_method=[], min_amount='', max_amount='', expect_period='', is_fixed_price, user_id='' } = info;
-		const finalPrice = is_fixed_price == 0 ? coin_price : price;
+		const { coin_type='', premium=0, price='', currency='', pay_method=[], min_amount='', max_amount='', expect_period='', is_fixed_price, user_id='' } = info;
+		const finalPrice = (is_fixed_price == 1 ? price : coin_price * (1 + Number(premium) / 100)).toFixed(2);
 		const coinType = coin_type.toUpperCase();
 
 		const usablePayInfo = pay_info.filter(item => {
@@ -302,9 +302,6 @@ class DealInfoDetailBlock extends Component {
 			 				</div>	
 			 				<div className="deal-info-detal-tips-item">
 			 					在您发起交易后，数字货币被冻结，受到Bitdad的保护。如果您是买家，发起交易请求后，您应在要求的时间内付款并把交易标记为付款已完成。卖家在收到付款后将会放行处于托管中的数字货币。
-			 				</div>	
-			 				<div className="deal-info-detal-tips-item">					
-								交易前请阅读《Bitdad网络服务条款》以及常见问题、交易指南等帮助文档。
 			 				</div>		
 			 				<div className="deal-info-detal-tips-item">
 			 					申述保护网上交易的买卖双方。在发生争议的情况下，我们将平复所提供的所有信息，并将托管的数字货币放行给其合法所有者
